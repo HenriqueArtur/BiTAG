@@ -53,7 +53,7 @@ module.exports = {
       },
       header_image: {
         allowNull: false,
-        type: DataTypes.STRING,
+        type: DataTypes.BLOB("long"),
       },
       about: {
         allowNull: true,

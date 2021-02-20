@@ -17,5 +17,9 @@ module.exports = (sequelize, DataTypes) => {
     detailed_description: DataTypes.STRING,
   });
 
+  Game.associate = function (models) {
+    Game.hasMany(models.Screenshot, { as: "screenshots" });
+  };
+
   return Game;
 };
