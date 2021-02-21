@@ -18,7 +18,11 @@ module.exports = (sequelize, DataTypes) => {
   });
 
   Game.associate = function (models) {
-    Game.hasMany(models.Screenshot, { as: "screenshots" });
+    Game.hasMany(models.Screenshot);
+    Game.belongsToMany(models.Tag, {
+      through: "GamesTags",
+      foreingKey: "id_game",
+    });
   };
 
   return Game;
