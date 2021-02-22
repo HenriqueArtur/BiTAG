@@ -1,6 +1,5 @@
 module.exports = (sequelize, DataTypes) => {
   const Tag = sequelize.define("Tag", {
-    id: DataTypes.INTEGER,
     name: DataTypes.STRING,
     games_count: DataTypes.INTEGER,
     revenue_0k_5k: DataTypes.FLOAT,
@@ -14,11 +13,10 @@ module.exports = (sequelize, DataTypes) => {
   });
 
   Tag.associate = function (models) {
-    Tag.belongsTo(models.Tag, {
-      foreingKey: "id_tags",
-    });
-    Tag.belongsTo(models.Game, {
-      foreingKey: "id_game",
+    Tag.belongsToMany(models.Game, {
+      through: "GamesTags",
+      foreignKey: "id_tag",
+      as: "game",
     });
   };
 

@@ -6,7 +6,6 @@ module.exports = {
       id: {
         allowNull: false,
         primaryKey: true,
-        unique: true,
         type: DataTypes.INTEGER,
       },
       name: {

@@ -11,7 +11,7 @@ module.exports = (sequelize, DataTypes) => {
     website: DataTypes.STRING,
     developer_name: DataTypes.STRING,
     publisher_name: DataTypes.STRING,
-    header_image: DataTypes.STRING,
+    header_image: DataTypes.BLOB("long"),
     about: DataTypes.STRING,
     short_description: DataTypes.STRING,
     detailed_description: DataTypes.STRING,
@@ -21,7 +21,8 @@ module.exports = (sequelize, DataTypes) => {
     Game.hasMany(models.Screenshot);
     Game.belongsToMany(models.Tag, {
       through: "GamesTags",
-      foreingKey: "id_game",
+      foreignKey: "id_game",
+      as: "tag",
     });
   };
 
