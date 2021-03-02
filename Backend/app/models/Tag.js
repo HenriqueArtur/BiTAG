@@ -10,6 +10,8 @@ module.exports = (sequelize, DataTypes) => {
     revenue_500k_1M: DataTypes.FLOAT,
     revenue_1M_5M: DataTypes.FLOAT,
     revenue_5M: DataTypes.FLOAT,
+    createdAt: DataTypes.DATEONLY,
+    updatedAt: DataTypes.DATEONLY,
   });
 
   Tag.associate = function (models) {
