@@ -11,7 +11,7 @@ module.exports = {
       },
       image: {
         allowNull: false,
-        type: DataTypes.BLOB("long"),
+        type: DataTypes.STRING,
       },
       id_game: {
         allowNull: false,

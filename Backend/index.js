@@ -3,6 +3,8 @@ import cors from "cors";
 import express from "express";
 const app = express();
 
+const pd = require("./app/services/populateDatabase.js");
+
 // Permite acesso externo
 app.use(cors());
 
@@ -18,3 +20,5 @@ app.get("/", (req, res) => {
 app.listen(process.env.PORT || 3000, () => {
   console.log(`Listening on port: ${process.env.PORT}`);
 });
+
+pd.populateDatabase(1);
