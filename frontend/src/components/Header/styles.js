@@ -25,8 +25,12 @@ export const NavbarHeader = styled(Navbar)`
   }
 
   .navbar-collapse {
+    margin-right: -.5rem;
+    margin-left: -.5rem;
+
     @media(max-width: 767px) {
       order: 3;
+      padding: 0 .5rem;
     }
   }
 `;
@@ -42,6 +46,7 @@ export const NavLink = styled(Link)`
 
 export const NavContainer = styled(Container)`
   flex-wrap: wrap !important;
+  padding: 0;
 
   .navbar-brand {
     @media(max-width: 767px) {
@@ -71,6 +76,10 @@ export const NavbarDropdown = styled(NavDropdown)`
         background-color: transparent;
       }
     }
+
+    @media(max-width: 767px) {
+      padding: 0 .5rem;
+    }
   }
 `;
 
@@ -78,10 +87,10 @@ export const UserButton = styled(Button)`
   background-color: var(--color-white);
   border: none;
   border-radius: 50%;
-  height: 80px;
+  height: 70px;
   overflow: hidden;
   padding: 0;
-  width: 80px;
+  width: 70px;
 
   &:hover,
   &:focus,

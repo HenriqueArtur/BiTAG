@@ -60,4 +60,12 @@ export default createGlobalStyle`
     max-height: none;
     max-width: 100%;
   }
+
+  @media (min-width: 768px) {
+    .container, .container-lg, .container-md, .container-sm, .container-xl {
+      max-width: 1400px;
+      padding-left: 3rem;
+      padding-right: 3rem;
+    }
+  }
 `;
