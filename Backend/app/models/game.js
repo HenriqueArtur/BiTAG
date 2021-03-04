@@ -11,7 +11,7 @@ module.exports = (sequelize, DataTypes) => {
     website: DataTypes.STRING,
     developer_name: DataTypes.STRING,
     publisher_name: DataTypes.STRING,
-    header_image: DataTypes.BLOB("long"),
+    header_image: DataTypes.STRING,
     about: DataTypes.STRING,
     short_description: DataTypes.STRING,
     detailed_description: DataTypes.STRING,

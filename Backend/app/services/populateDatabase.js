@@ -1,5 +1,5 @@
 const got = require("got");
-const { Game } = require("../models");
+const { Game, Screenshot } = require("../models");
 
 exports.populateDatabase = (timeOut) => {
   const steamSpy = "https://steamspy.com/api.php?request=all&page=1";
@@ -11,20 +11,25 @@ exports.populateDatabase = (timeOut) => {
 async function getGames(steamSpy, storeFront) {
   let games;
   try {
-    let sp = await got.get(steamSpy);
-    let spJSON = JSON.parse(sp.body);
-
     let count = 1;
 
+    await Screenshot.destroy({
+      where: {},
+    });
     await Game.destroy({
       where: {},
     });
+
+    let sp = await got.get(steamSpy);
+    let spJSON = JSON.parse(sp.body);
 
     for (var k in spJSON) {
       if (count < 10) {
         let sf = await got.get(`${storeFront}${spJSON[k].appid}`);
         let sfJSON = JSON.parse(sf.body);
         let sfObj = sfJSON[spJSON[k].appid];
+
+        let screenshots = sfObj.data.screenshots;
 
         let price = spJSON[k].price;
 
@@ -66,7 +71,15 @@ async function getGames(steamSpy, storeFront) {
           detailed_description: detailed_description,
         };
         try {
-          Game.create(game);
+          Game.create(game).then((game) => {
+            for (let screenshot in screenshots) {
+              Screenshot.create({
+                id: parseInt(screenshots[screenshot].id, 10),
+                image: screenshots[screenshot].path_full,
+                id_game: game.id,
+              });
+            }
+          });
         } catch (error) {
           console.log(error);
         }
@@ -74,7 +87,7 @@ async function getGames(steamSpy, storeFront) {
       }
     }
   } catch (error) {
-    console.log(error.response.body);
+    console.log(error);
   }
 }
 
