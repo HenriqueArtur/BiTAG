@@ -1,8 +1,5 @@
 import styled from 'styled-components';
 
-import { Form } from 'react-bootstrap';
-import { Link } from 'react-router-dom';
-
 export const TagCard = styled.div`
   align-items: center;
   display: flex;
@@ -39,24 +36,4 @@ export const TagCounter = styled.p`
   font-size: .8rem;
   font-weight: 500;
   margin: .4rem 0 0;
-`;
-
-
-export const Select = styled.select`
-  background-color: transparent;
-  border: none;
-  color: var(--main-color);
-`;
-
-export const DropLink = styled(Link)`
-  display: flex;
-  padding: .5rem .5rem;
-
-  @media(max-width: 767px) {
-    padding: .5rem 0;
-  }
-`;
-
-export const Option = styled.option`
-
 `;

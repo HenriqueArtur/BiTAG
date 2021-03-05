@@ -51,14 +51,24 @@ export default createGlobalStyle`
     }
   }
 
-  .flex-100 {
-    flex: 1 1 100% !important;
-  }
-
   img {
     height: auto;
     max-height: none;
     max-width: 100%;
+  }
+
+  .flex-100 {
+    flex: 1 1 100% !important;
+  }
+
+  .form-control {
+    border-color: var(--main-color);
+
+    &:focus {
+      border-color: var(--border-color);
+      box-shadow: none;
+      outline: 0;
+    }
   }
 
   @media (min-width: 768px) {
