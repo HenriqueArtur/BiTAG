@@ -13,6 +13,7 @@ const ModalLogin = (props) => {
 
   return (
     <S.ModalLogin
+      animation={false}
       {...props}
       size="lg"
       aria-labelledby="contained-modal-title-vcenter"
@@ -21,12 +22,12 @@ const ModalLogin = (props) => {
       <Modal.Body>
         <Form>
           <InputGroup
-            label="Username"
+            label="Nome de usuário"
             controlId="username"
             type="text"
             value={username}
             onChange={e => setUsername(e.target.value)}
-            placeholder="Insira seu username"
+            placeholder="Insira seu nome de usuário"
             required="required"
           />
 

@@ -2,48 +2,76 @@ import React, { useState } from 'react';
 
 import * as S from './styles';
 
-import { Form, Modal } from 'react-bootstrap';
-import InputGroup from '../InputGroup';
+import { Modal } from 'react-bootstrap';
 
-import { ButtonPrimary } from '../CustomButton';
+import woman from '../../assets/woman.jpg';
+import { ButtonBordered } from '../CustomButton';
+
+import ShowProfile from '../Profile/ShowProfile';
+import EditProfile from '../Profile/EditProfile';
 
 const ModalUser = (props) => {
-  const [username, setUsername] = useState('');
-  const [senha, setSenha] = useState('');
+  const [toggle, setToggle] = useState(false);
+
+  function handleToggleAccount () {
+    setToggle(!toggle);
+  }
 
   return (
     <S.ModalUser
+      animation={false}
       {...props}
       size="lg"
       aria-labelledby="contained-modal-title-vcenter"
       centered
     >
       <Modal.Body>
-        <Form>
-          <InputGroup
-            label="Username"
-            controlId="username"
-            type="text"
-            value={username}
-            onChange={e => setUsername(e.target.value)}
-            placeholder="Insira seu username"
-            required="required"
-          />
+        <S.UserSidebar>
+          <S.UserIcon>
+            <img src={woman} alt="Woman profile" />
+          </S.UserIcon>
 
-          <InputGroup
-            label="Senha"
-            controlId="senha"
-            type="senha"
-            value={senha}
-            onChange={e => setSenha(e.target.value)}
-            placeholder="Insira sua senha"
-            required="required"
-          />
+          <S.UserNav>
+            <ul>
+              <li>
+                <button type="button">
+                  Visão geral da conta
+                </button>
+              </li>
+              <li>
+                <button type="button">
+                  Segurança
+                </button>
+              </li>
+            </ul>
+          </S.UserNav>
+        </S.UserSidebar>
 
-          <ButtonPrimary>
-            Login
-          </ButtonPrimary>
-        </Form>
+        <S.MainAccount>
+          <h1>Visão geral da conta</h1>
+          {
+            toggle ?
+              <EditProfile />
+            :
+              <ShowProfile />
+          }
+
+
+          {
+            !toggle &&
+            <ButtonBordered bold light onClick={handleToggleAccount}>
+              Editar Perfil
+            </ButtonBordered>
+          }
+
+          {
+            toggle &&
+            <ButtonBordered className="cancel" light bold onClick={handleToggleAccount}>
+              Cancelar
+            </ButtonBordered>
+          }
+
+        </S.MainAccount>
       </Modal.Body>
     </S.ModalUser>
   );

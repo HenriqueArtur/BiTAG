@@ -5,12 +5,36 @@ import { Link } from 'react-router-dom';
 
 import logo from '../../assets/logo.png';
 import user from '../../assets/user.png';
+import woman from '../../assets/woman.jpg';
+
 import ModalLogin from '../ModalLogin';
+import ModalUser from '../ModalUser';
 
 import * as S from './styles';
 
 const Header = (props) => {
   const [modalShow, setModalShow] = useState(false);
+  const logged = true;
+
+  function Modal(props) {
+    const isLoggedIn = props.isLoggedIn;
+
+    if(isLoggedIn) {
+      return (
+        <ModalUser
+          show={modalShow}
+          onHide={() => setModalShow(false)}
+        />
+      );
+    }
+
+    return (
+      <ModalLogin
+        show={modalShow}
+        onHide={() => setModalShow(false)}
+      />
+    );
+  }
 
   return (
     <>
@@ -40,13 +64,15 @@ const Header = (props) => {
           </Navbar.Collapse>
 
           <S.UserButton variant="primary" onClick={() => setModalShow(true)}>
-            <img src={user} alt="User profile" />
+            {
+              logged ?
+                <img src={woman} alt="Woman profile" />
+              :
+                <img src={user} alt="User profile" />
+            }
           </S.UserButton>
 
-          <ModalLogin
-            show={modalShow}
-            onHide={() => setModalShow(false)}
-          />
+          <Modal isLoggedIn={logged} />
         </S.NavContainer>
       </S.NavbarHeader>
     </>

@@ -7,7 +7,7 @@ export const ModalLogin = styled(Modal)`
 
   .modal-dialog {
     @media screen and (min-width: 768px) {
-      max-width: 450px;
+      max-width: 400px;
     }
   }
 

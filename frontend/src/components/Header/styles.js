@@ -92,6 +92,12 @@ export const UserButton = styled(Button)`
   padding: 0;
   width: 70px;
 
+  img {
+    height: 100%;
+    width: 100%;
+    object-fit: cover;
+  }
+
   &:hover,
   &:focus,
   &:not(:disabled):not(.disabled):active {
