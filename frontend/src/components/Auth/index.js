@@ -7,12 +7,12 @@ import InputGroup from '../InputGroup';
 
 import { ButtonPrimary } from '../CustomButton';
 
-const ModalLogin = (props) => {
+const ModalAuth = (props) => {
   const [username, setUsername] = useState('');
   const [senha, setSenha] = useState('');
 
   return (
-    <S.ModalLogin
+    <S.ModalAuth
       animation={false}
       {...props}
       size="lg"
@@ -46,8 +46,8 @@ const ModalLogin = (props) => {
           </ButtonPrimary>
         </Form>
       </Modal.Body>
-    </S.ModalLogin>
+    </S.ModalAuth>
   );
 }
 
-export default ModalLogin;
+export default ModalAuth;

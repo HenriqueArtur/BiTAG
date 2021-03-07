@@ -11,7 +11,7 @@ const TagsComparison = () => {
     <div id="page-tags-comparison">
       <Container>
         <Row>
-          <Link to="/">
+          <Link to="/tags">
             <FiChevronLeft color="#66fcf1" size={25} />
             Voltar
           </Link>

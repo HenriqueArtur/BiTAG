@@ -17,6 +17,16 @@ export const ModalUser = styled(Modal)`
     border-radius: 10px;
     overflow: hidden;
 
+    .modal-header {
+      border: 0;
+      justify-content: center;
+      padding: 0;
+      position: absolute;
+      right: 1rem;
+      top: 10px;
+      z-index: 1;
+    }
+
     .modal-body {
       display: flex;
       padding: 0;

@@ -1,22 +1,13 @@
-import React, { useState } from 'react';
+import React from 'react';
 
 import * as S from './styles';
 
 import { Modal } from 'react-bootstrap';
 
 import woman from '../../assets/woman.jpg';
-import { ButtonBordered } from '../CustomButton';
-
-import ShowProfile from '../Profile/ShowProfile';
-import EditProfile from '../Profile/EditProfile';
+import Profile from '../Profile';
 
 const ModalUser = (props) => {
-  const [toggle, setToggle] = useState(false);
-
-  function handleToggleAccount () {
-    setToggle(!toggle);
-  }
-
   return (
     <S.ModalUser
       animation={false}
@@ -25,6 +16,8 @@ const ModalUser = (props) => {
       aria-labelledby="contained-modal-title-vcenter"
       centered
     >
+      <Modal.Header closeButton />
+
       <Modal.Body>
         <S.UserSidebar>
           <S.UserIcon>
@@ -49,27 +42,8 @@ const ModalUser = (props) => {
 
         <S.MainAccount>
           <h1>Visão geral da conta</h1>
-          {
-            toggle ?
-              <EditProfile />
-            :
-              <ShowProfile />
-          }
 
-
-          {
-            !toggle &&
-            <ButtonBordered bold light onClick={handleToggleAccount}>
-              Editar Perfil
-            </ButtonBordered>
-          }
-
-          {
-            toggle &&
-            <ButtonBordered className="cancel" light bold onClick={handleToggleAccount}>
-              Cancelar
-            </ButtonBordered>
-          }
+          <Profile />
 
         </S.MainAccount>
       </Modal.Body>

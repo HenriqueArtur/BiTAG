@@ -1,74 +1,113 @@
 import React, { useState } from 'react';
+import { toast } from 'react-toastify';
 
-import { Col, Row } from 'react-bootstrap';
-
-import { ButtonBordered, ButtonPrimary } from '../../CustomButton';
+import { Col, Form } from 'react-bootstrap';
 
 import * as S from './styles';
 
 const EditProfile = () => {
-  const [toggle, setToggle] = useState(false);
+  const [name, setName] = useState('');
+  const [lastName, setLastName] = useState('');
+  const [userName, setUserName] = useState('');
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [passwordConfirmation, setPasswordConfirmation] = useState('');
 
-  function handleToggleAccount () {
-    setToggle(!toggle);
+  function handleSubmit(e) {
+    e.preventDefault();
+
+    try {
+      if (password === passwordConfirmation) {
+        toast.success("Password updated succesfully!");
+      } else {
+        toast.error("Passwords don't match. Try again.");
+      }
+    } catch (error) {
+      toast.error("An error has occurred. Please, try again.");
+    }
+
   }
 
   return (
-    <S.EditAccount>
-      <h3>Editando Perfil</h3>
-
-      <Row>
-        <Col md="12" className="d-flex justify-content-between">
+    <>
+      <Col md="12" className="mb-3">
+        <Form id="form-edit-profile" onSubmit={handleSubmit}>
           <S.Info>
-            <label>Nome</label>
-            <p>Fulano</p>
+            <Form.Label>Foto de perfil</Form.Label>
+
+            <Form.File
+              className="position-relative"
+              required
+              name="file"
+              id="validationFormik107"
+              feedbackTooltip
+            />
           </S.Info>
-
-        </Col>
-
-        <Col md="12" className="d-flex justify-content-between">
           <S.Info>
-            <label>Sobrenome</label>
-            <p>De Tal</p>
+            <Form.Label>Nome</Form.Label>
+            <Form.Control
+              type="text"
+              placeholder="Nome"
+              value={name}
+              onChange={e => setName(e.target.value)}
+              required
+            />
           </S.Info>
-        </Col>
-
-        <Col md="12" className="d-flex justify-content-between">
           <S.Info>
-            <label>Nome de usuário</label>
-            <p>exemplouser</p>
+            <Form.Label>Sobrenome</Form.Label>
+            <Form.Control
+              type="text"
+              placeholder="Sobrenome"
+              value={lastName}
+              onChange={e => setLastName(e.target.value)}
+              required
+            />
           </S.Info>
-        </Col>
-
-        <Col md="12" className="d-flex justify-content-between">
           <S.Info>
-            <label>Email</label>
-            <p>exemplo@gmail.com</p>
+            <Form.Label>Nome de usuário</Form.Label>
+            <Form.Control
+              type="text"
+              placeholder="Nome de usuário"
+              value={userName}
+              onChange={e => setUserName(e.target.value)}
+              required
+            />
           </S.Info>
-        </Col>
-
-        <Col md="12" className="d-flex justify-content-between">
           <S.Info>
-            <label>Senha</label>
-            <p>*******</p>
+            <Form.Label>Email</Form.Label>
+            <Form.Control
+              type="text"
+              placeholder="Email"
+              value={email}
+              onChange={e => setEmail(e.target.value)}
+              required
+            />
           </S.Info>
-        </Col>
-
-        <Col md="12" className="d-flex justify-content-between">
           <S.Info>
-            <label>Nome do usuário</label>
-            <p>exemplo@gmail.com</p>
+            <Form.Label>Senha</Form.Label>
+            <Form.Control
+              type="password"
+              placeholder="Senha"
+              value={password}
+              onChange={e => setPassword(e.target.value)}
+              required
+            />
           </S.Info>
-        </Col>
+          <S.Info>
+            <Form.Label>Confirmar Senha</Form.Label>
+            <Form.Control
+              type="password"
+              placeholder="Confirmar senha"
+              value={passwordConfirmation}
+              onChange={e => setPasswordConfirmation(e.target.value)}
+              required
+            />
+          </S.Info>
+        </Form>
 
-        <Col className="d-flex justify-content-between">
-          <ButtonPrimary className="ml-auto">
-            Salvar
-          </ButtonPrimary>
-        </Col>
-      </Row>
 
-    </S.EditAccount>
+      </Col>
+    </>
   );
 }
 

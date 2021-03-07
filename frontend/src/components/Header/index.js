@@ -7,14 +7,14 @@ import logo from '../../assets/logo.png';
 import user from '../../assets/user.png';
 import woman from '../../assets/woman.jpg';
 
-import ModalLogin from '../ModalLogin';
+import ModalAuth from '../ModalAuth';
 import ModalUser from '../ModalUser';
 
 import * as S from './styles';
 
 const Header = (props) => {
   const [modalShow, setModalShow] = useState(false);
-  const logged = true;
+  const logged = false;
 
   function Modal(props) {
     const isLoggedIn = props.isLoggedIn;
@@ -29,7 +29,7 @@ const Header = (props) => {
     }
 
     return (
-      <ModalLogin
+      <ModalAuth
         show={modalShow}
         onHide={() => setModalShow(false)}
       />
@@ -51,8 +51,8 @@ const Header = (props) => {
           <Navbar.Collapse className="mt-4" id="responsive-navbar-nav">
             <Nav>
               <S.NavbarDropdown title="Descubra" id="basic-nav-dropdown">
-                <S.NavLink to="tags">Tags</S.NavLink>
-                <S.NavLink to="tags">Jogos</S.NavLink>
+                <S.NavLink to="/tags">Tags</S.NavLink>
+                <S.NavLink to="/games">Jogos</S.NavLink>
               </S.NavbarDropdown>
               <S.NavLink to="/tags">
                 Recente

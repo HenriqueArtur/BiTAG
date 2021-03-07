@@ -62,10 +62,7 @@ export default createGlobalStyle`
   }
 
   .form-control {
-    border-color: var(--main-color);
-
     &:focus {
-      border-color: var(--border-color);
       box-shadow: none;
       outline: 0;
     }

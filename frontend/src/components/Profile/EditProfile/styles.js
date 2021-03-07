@@ -1,33 +1,30 @@
 import styled from 'styled-components';
 
-export const EditAccount = styled.div`
-  > h3 {
-    font-size: 1.2rem;
-    font-weight: 700;
-    margin: 0 0 1rem;
-  }
-`;
-
-
 export const Info = styled.div`
+  align-items: center;
+
   > label {
     color: var(--color-light);
-    display: block;
-    margin: 0 0 1rem;
+    margin: 0;
 
     @media screen and (min-width: 768px) {
       flex-basis: 50%;
     }
   }
 
-  > p {
-    display: block;
-    font-weight: 700;
-    margin: 0 0 1rem;
+  .form-file,
+  .form-control {
+    &:focus {
+      border-color: var(--main-color);
+    }
 
     @media screen and (min-width: 768px) {
       flex-basis: 50%;
     }
+  }
+
+  & + & {
+    margin-top: .5rem;
   }
 
   @media screen and (min-width: 768px) {
