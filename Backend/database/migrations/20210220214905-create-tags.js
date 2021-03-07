@@ -60,11 +60,11 @@ module.exports = {
       },
       createdAt: {
         allowNull: false,
-        type: DataTypes.DATE,
+        type: DataTypes.DATE(6),
       },
       updatedAt: {
         allowNull: false,
-        type: DataTypes.DATE,
+        type: DataTypes.DATE(6),
       },
     });
   },

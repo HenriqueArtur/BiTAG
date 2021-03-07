@@ -52,19 +52,19 @@ module.exports = {
       },
       header_image: {
         allowNull: false,
-        type: DataTypes.BLOB("long"),
+        type: DataTypes.STRING,
       },
       about: {
         allowNull: true,
-        type: DataTypes.STRING,
+        type: DataTypes.TEXT,
       },
       short_description: {
         allowNull: false,
-        type: DataTypes.STRING,
+        type: DataTypes.TEXT,
       },
       detailed_description: {
         allowNull: false,
-        type: DataTypes.STRING,
+        type: DataTypes.TEXT,
       },
       createdAt: {
         allowNull: false,
