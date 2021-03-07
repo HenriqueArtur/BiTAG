@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 
 import { Col, Container, Row } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
@@ -7,7 +7,23 @@ import { FiChevronLeft } from 'react-icons/fi';
 import * as S from './styles';
 import GameCard from '../../components/GameCard';
 
+import ChartBar from '../../components/ChartBar';
+import axios from 'axios';
+
 const Games = () => {
+  const [label, setLabel] = useState([]);
+  const [price, setPrice] = useState([]);
+  const [discount, setDiscount] = useState([]);
+
+  useEffect(() => {
+    axios.get("./steam.json")
+    .then(result => {
+      setLabel(Object.keys(result.data).map(key => result.data[key].release));
+      setPrice(Object.keys(result.data).map(key => result.data[key].price));
+      setDiscount(Object.keys(result.data).map(key => result.data[key].discount));
+    });
+  }, []);
+
   return (
     <div id="page-game">
       <Container className="d-flex flex-column">
@@ -43,9 +59,35 @@ const Games = () => {
           <Col md="6" lg="6">
             <Row>
               <Col>
+                <ChartBar
+                  data={{
+                    labels: label,
+                    datasets: [
+                      {
+                        type: "line",
+                        label: "Releases price",
+                        borderColor: "rgba(255,99,132,0.8)",
+                        borderWidth: 1,
+                        hoverBorderColor: "rgba(255,99,132,1)",
+                        fill: false,
+                        data: price
+                      },
+                      {
+                        type: "bar",
+                        label: "Releases discount",
+                        backgroundColor: "rgba(111, 227, 255, 0.2)",
+                        borderColor: "rgba(111, 227, 255, 1)",
+                        borderWidth: 1,
+                        hoverBackgroundColor: "rgba(111, 227, 255, 0.4)",
+                        hoverBorderColor: "rgba(111, 227, 255, 1)",
+                        data: discount
+                      }
+                    ],
+                  }}
+                />
               </Col>
             </Row>
-            <Row>
+            <Row className="mt-5">
               <Col>
                 <Row>
                   <Col>

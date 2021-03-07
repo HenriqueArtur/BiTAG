@@ -28,22 +28,22 @@ const ModalAuth = (props) => {
         {
           toggleAuth ?
             <>
-              <LoginAccount />
-              <ButtonPrimary form="form-login" type="submit">
-                Login
-              </ButtonPrimary>
-              <ButtonBordered type="button" light bold className="btn-account" onClick={handleToggleAuth} >
-                Criar conta
-              </ButtonBordered>
-            </>
-          :
-            <>
               <CreateAccount />
               <ButtonPrimary form="form-create" type="submit">
                 Cadastrar
               </ButtonPrimary>
               <ButtonBordered type="button" light bold className="btn-account" onClick={handleToggleAuth}>
                 Já tenho conta
+              </ButtonBordered>
+            </>
+          :
+            <>
+              <LoginAccount />
+              <ButtonPrimary form="form-login" type="submit">
+                Login
+              </ButtonPrimary>
+              <ButtonBordered type="button" light bold className="btn-account" onClick={handleToggleAuth} >
+                Criar conta
               </ButtonBordered>
             </>
         }

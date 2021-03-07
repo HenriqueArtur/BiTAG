@@ -1,0 +1,92 @@
+[
+  {
+    "id": 1,
+    "Game": "Resident Evil 3",
+    "release": "Apr 2, 2020",
+    "price": "19.79",
+    "discount": "67",
+    "Score rank(Userscore / Metascore)": "N/A (N/A/77%)",
+    "owners": "2000"
+  },
+  {
+    "id": 2,
+    "Game": "The Outer Worlds",
+    "release": "Oct 23, 2020",
+    "price": "29.99",
+    "discount": "50",
+    "Score rank(Userscore / Metascore)": "N/A (N/A/82%)",
+    "owners": "5000"
+  },
+  {
+    "id": 3,
+    "Game": "Unrailed!",
+    "release": "Sep 23, 2020",
+    "price": "9.99",
+    "discount": "50",
+    "Score rank(Userscore / Metascore)": "N/A (N/A/77%)",
+    "owners": "1000"
+  },
+  {
+    "id": 4,
+    "Game": "Skul: The Hero Slayer",
+    "release": "Jan 20, 2021",
+    "price": "15.99",
+    "discount": "20",
+    "Score rank(Userscore / Metascore)": "N/A (N/A)",
+    "owners": "50000"
+  },
+  {
+    "id": 5,
+    "Game": "Train Sim World 2",
+    "release": "Aug 20, 2020",
+    "price": "14.99",
+    "discount": "50",
+    "Score rank(Userscore / Metascore)": "N/A (N/A)",
+    "owners": "1000"
+  },
+  {
+    "id": 6,
+    "Game": "PixARK",
+    "release": "May 31, 2019",
+    "price": "14.79",
+    "discount": "63",
+    "Score rank(Userscore / Metascore)": "N/A (N/A)",
+    "owners": "5000"
+  },
+  {
+    "id": 7,
+    "Game": "Amazing Cultivation Simulator",
+    "release": "Nov 24, 2020",
+    "price": "22.49",
+    "discount": "10",
+    "Score rank(Userscore / Metascore)": "N/A (N/A)",
+    "owners": "50000"
+  },
+  {
+    "id": 8,
+    "Game": "My Time At Portia",
+    "release": "Jan 15, 2019",
+    "price": "10.19",
+    "discount": "66",
+    "Score rank(Userscore / Metascore)": "N/A (N/A/73%)",
+    "owners": "10000"
+  },
+  {
+    "id": 9,
+    "Game": "Red Dead Redemption 2",
+    "release": "Dec 5, 2019",
+    "price": "40.19",
+    "discount": "33",
+    "Score rank(Userscore / Metascore)": "N/A (N/A/93%)",
+    "owners": "5000"
+  },
+  {
+    "id": 10,
+    "Game": "Warhammer: Vermintide 2",
+    "release": "Mar 8, 2018",
+    "price": "700.49",
+    "discount": "75",
+    "Score rank(Userscore / Metascore)": "N/A (N/A/82%)",
+    "owners": "500"
+  }
+]
