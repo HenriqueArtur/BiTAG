@@ -36,7 +36,7 @@ module.exports = {
       },
       release_date: {
         allowNull: false,
-        type: DataTypes.DATE,
+        type: DataTypes.STRING,
       },
       website: {
         allowNull: true,

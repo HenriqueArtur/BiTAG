@@ -7,7 +7,7 @@ module.exports = (sequelize, DataTypes) => {
     positive_reviews: DataTypes.INTEGER,
     negative_reviews: DataTypes.INTEGER,
     owners: DataTypes.INTEGER,
-    release_date: DataTypes.DATE,
+    release_date: DataTypes.STRING,
     website: DataTypes.STRING,
     developer_name: DataTypes.STRING,
     publisher_name: DataTypes.STRING,

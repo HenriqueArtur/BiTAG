@@ -21,4 +21,4 @@ app.listen(process.env.PORT || 3000, () => {
   console.log(`Listening on port: ${process.env.PORT}`);
 });
 
-pd.populateDatabase(1);
+pd.populateDatabase(600000, 43, 0);
