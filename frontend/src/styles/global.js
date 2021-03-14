@@ -61,6 +61,10 @@ export default createGlobalStyle`
     flex: 1 1 100% !important;
   }
 
+  .flex-1 {
+    flex: 1 !important;
+  }
+
   .form-control {
     &:focus {
       box-shadow: none;

@@ -4,24 +4,24 @@ import * as S from './styles';
 
 export const LinkPrimary = ({ className, to, children, ...rest }) => {
   return (
-    <S.ButtonPrimary className={`btn ${className}`} to={to} {...rest}>
+    <S.LinkPrimary className={`btn ${className}`} to={to} {...rest}>
       {children}
-    </S.ButtonPrimary>
+    </S.LinkPrimary>
   );
 }
 
 export const LinkBordered = ({ className, to, children, ...rest }) => {
   return (
-    <S.ButtonBordered className={`btn ${className}`} to={to} {...rest}>
+    <S.LinkBordered className={`btn ${className}`} to={to} {...rest}>
       {children}
-    </S.ButtonBordered>
+    </S.LinkBordered>
   );
 }
 
 export const LinkLight = ({ className, to, children, ...rest }) => {
   return (
-    <S.ButtonLight className={`btn ${className}`} to={to} {...rest}>
+    <S.LinkLight className={`btn ${className}`} to={to} {...rest}>
       {children}
-    </S.ButtonLight>
+    </S.LinkLight>
   );
 }
