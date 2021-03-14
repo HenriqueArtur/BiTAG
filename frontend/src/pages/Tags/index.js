@@ -17,7 +17,6 @@ import * as S from './styles';
 import api from '../../services/api';
 
 const Tags = () => {
-  const [tagSelected, setTagSelected] = useState([]);
   const [selectedTags, setSelectedTags] = useState([]);
   const [tags, setTags] = useState([]);
 
@@ -35,8 +34,6 @@ const Tags = () => {
   }, [searchTerm]);
 
   const handleSelectTag = (tag) => {
-    // setTagSelected(!tagSelected);
-
     selectedTags.includes(tag.name)
       ? setSelectedTags(selectedTags.filter(x => x !== tag.name))
       : setSelectedTags([...selectedTags, tag.name]);
@@ -49,9 +46,7 @@ const Tags = () => {
     });
   }
 
-  const handleSearchTags = (e) => {
-    e.preventDefault();
-
+  const handleSearchTags = () => {
     setTags(
       tags.filter((tag) =>
         tag.name.toLowerCase().includes(searchTerm.toLowerCase())
@@ -91,30 +86,32 @@ const Tags = () => {
         </Row>
 
         <Row className="flex-100 justify-content-between px-md-5">
-          {tags.map((tag) => (
-            <S.TagCard key={tag.id} selectedTags={selectedTags} tagSelected={tagSelected}>
-              {/* {
-                selected &&
+          {tags.map(tag => (
+            <S.TagCard key={tag.id} bordered={selectedTags.includes(tag.name) ? true : false}>
+              {
+                selectedTags.includes(tag.name) &&
                 <FiCheck size="20"/>
-              } */}
+              }
 
               <S.DataTitle>
                 {tag.name}
               </S.DataTitle>
 
               <S.TagQty>{tag.games_count} {tag.games_count > 1 ? "produtos" : "produto"}</S.TagQty>
-
-              <S.TagActions>
-                <ButtonPrimary key={tag.id} type="button" onClick={() => handleSelectTag(tag)}>
-                  Selecionar
-                </ButtonPrimary>
-                <Link to="/games">
-                  Ver jogos
-                </Link>
-                <Link to="/">
-                  Ver descrição
-                </Link>
-              </S.TagActions>
+              {
+                !selectedTags.includes(tag.name) &&
+                  <S.TagActions>
+                    <ButtonPrimary key={tag.id} type="button" onClick={() => handleSelectTag(tag)}>
+                      Selecionar
+                    </ButtonPrimary>
+                    <Link to="/games">
+                      Ver jogos
+                    </Link>
+                    <Link to="/">
+                      Ver descrição
+                    </Link>
+                  </S.TagActions>
+              }
             </S.TagCard>
           ))}
         </Row>

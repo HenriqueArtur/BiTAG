@@ -15,7 +15,7 @@ export const TagQty = styled.p`
 
 export const TagActions = styled.div`
   align-items: flex-start;
-  display: flex;
+  display: none;
   flex: 1 1 100%;
   flex-direction: column;
   margin: .25rem 0 0;
@@ -36,7 +36,7 @@ export const TagActions = styled.div`
 export const TagCard = styled.div`
   align-items: center;
   display: flex;
-  /* border: 1px solid ${props => props.tagSelected ? "var(--main-color)" : "transparent"}; */
+  border: 1px solid ${props => props.bordered ? "var(--main-color)" : "transparent"};
   border-radius: 5px;
   flex-wrap: wrap;
   justify-content: space-between;
@@ -51,17 +51,11 @@ export const TagCard = styled.div`
     position: absolute;
   }
 
-  /* ${TagActions} {
-    ${props => props.selectedTags.length >= 2 && `
-      display: none;
-    `}
-  } */
-
-  /* &:hover {
+  &:hover {
     ${TagActions} {
-      display: ${props => props.tagSelected ? "none" : "flex"};
+      display: flex;
     }
-  } */
+  }
 
   @media screen and (max-width: 767px) {
     flex-basis: 100%;
