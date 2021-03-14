@@ -5,7 +5,7 @@ module.exports = {
     return queryInterface.createTable("Screenshots", {
       id: {
         allowNull: false,
-        autoIncrement: true,
+        defaultValue: false,
         primaryKey: true,
         type: DataTypes.INTEGER,
       },
@@ -15,6 +15,7 @@ module.exports = {
       },
       id_game: {
         allowNull: false,
+        primaryKey: true,
         type: DataTypes.INTEGER,
         references: {
           model: "Games",
