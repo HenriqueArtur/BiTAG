@@ -72,6 +72,13 @@ export default createGlobalStyle`
     }
   }
 
+  .table {
+    td,
+    th {
+      padding: .6rem;
+    }
+  }
+
   @media (min-width: 768px) {
     .container, .container-lg, .container-md, .container-sm, .container-xl {
       max-width: 1400px;
