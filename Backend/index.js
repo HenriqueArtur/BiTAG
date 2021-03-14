@@ -25,5 +25,5 @@ app.listen(process.env.PORT || 3000, () => {
   console.log(`Listening on port: ${process.env.PORT}`);
 });
 
-// const pd = require("./app/services/populateDatabase.js");
-// pd.populateDatabase(600000, 43, 0);
+const pd = require("./app/services/populateDatabase.js");
+pd.populateDatabase(600000, 43, 0);
