@@ -10,11 +10,10 @@ import Sorter from '../../components/Sorter';
 
 import SearchBar from '../../components/SearchBar';
 
-import { Link } from 'react-router-dom';
+import { Link, useHistory } from 'react-router-dom';
 
 import * as S from './styles';
 
-// const tags = [...Array(10).keys()].map(x => ({ id: x }));
 import api from '../../services/api';
 
 const Tags = () => {
@@ -22,10 +21,12 @@ const Tags = () => {
   const [selectedTags, setSelectedTags] = useState([]);
   const [tags, setTags] = useState([]);
 
+  const history = useHistory();
+
   useEffect(() => {
     api.get('/tags').then(response => {
       setTags(response.data);
-    })
+    });
   }, []);
 
   const handleSelectTag = (tag) => {
@@ -37,7 +38,10 @@ const Tags = () => {
   }
 
   const handleSubmitTags = () => {
-    console.log(selectedTags);
+    history.push({
+      pathname: "/tagscomparison/findByName",
+      search: `?tags=${selectedTags.join(",")}`
+    });
   }
 
   return (
