@@ -23,11 +23,16 @@ const Tags = () => {
 
   const history = useHistory();
 
+  const [searchTerm, setSearchTerm] = useState("");
+
   useEffect(() => {
-    api.get('/tags').then(response => {
+    api.get('/tags')
+    .then(response => {
       setTags(response.data);
+    }).catch(err => {
+      console.log(err);
     });
-  }, []);
+  }, [searchTerm]);
 
   const handleSelectTag = (tag) => {
     // setTagSelected(!tagSelected);
@@ -42,6 +47,16 @@ const Tags = () => {
       pathname: "/tagscomparison/findByName",
       search: `?tags=${selectedTags.join(",")}`
     });
+  }
+
+  const handleSearchTags = (e) => {
+    e.preventDefault();
+
+    setTags(
+      tags.filter((tag) =>
+        tag.name.toLowerCase().includes(searchTerm.toLowerCase())
+      )
+    );
   }
 
   return (
@@ -66,7 +81,12 @@ const Tags = () => {
           </Col>
 
           <Col sm="12" md="4">
-            <SearchBar className="justify-content-center justify-content-md-end" />
+            <SearchBar
+              className="justify-content-center justify-content-md-end"
+              onChange={e => setSearchTerm(e.target.value)}
+              value={searchTerm}
+              onClick={handleSearchTags}
+            />
           </Col>
         </Row>
 

@@ -1,17 +1,15 @@
 import React from 'react';
-import { Form } from 'react-bootstrap';
+import { Row } from 'react-bootstrap';
 
 import { ButtonBordered } from '../CustomButton';
 import Field from "../../components/Field";
 
-const SearchBar = ({className}) => {
+const SearchBar = ({className, onChange, value, onClick}) => {
   return (
-    <>
-      <Form className={`${className}`} inline>
-        <Field type="text" placeholder="Pesquisar" className="mr-sm-2" />
-        <ButtonBordered type="button" sm="true" variant="outline-success">Pesquisar</ButtonBordered>
-      </Form>
-    </>
+    <Row className="justify-content-end">
+      <Field onChange={onChange} value={value} type="text" placeholder="Pesquisar" className="mr-sm-2" />
+      <ButtonBordered className="ml-2" type="button" sm="true" variant="outline-success" onClick={onClick}>Pesquisar</ButtonBordered>
+    </Row>
   );
 }
 
