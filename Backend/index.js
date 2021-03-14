@@ -1,24 +1,29 @@
 import "dotenv/config";
 import cors from "cors";
-import express from "express";
+const express = require("express");
+const route = require("./app/routes/route.js");
+const bodyParser = require("body-parser");
+
+const Tag = require("./app/controllers/tag.controller");
+
 const app = express();
 
-const pd = require("./app/services/populateDatabase.js");
+// app.use(cors());
+app.use("./api", route);
+app.use(bodyParser.urlencoded({ extended: true }));
+app.use(bodyParser.json());
 
-// Permite acesso externo
-app.use(cors());
-
-// Desativa o X-Powered-By: Express
-app.disable("x-powered-by");
-
-// Criamos uma rota raiz com o texto Hello World!
 app.get("/", (req, res) => {
-  res.send("Hello World!");
+  res.json({ message: "Welcome to BiTAG application." });
 });
 
-// Passamos a porta onde o servidor ficará ouvindo
+app.get("/tags", Tag.findAll);
+app.get("/tags/findByName", Tag.findByName);
+app.get("/tags/findByOptions", Tag.findByOptions);
+
 app.listen(process.env.PORT || 3000, () => {
   console.log(`Listening on port: ${process.env.PORT}`);
 });
 
-pd.populateDatabase(1);
+// const pd = require("./app/services/populateDatabase.js");
+// pd.populateDatabase(600000, 43, 0);
