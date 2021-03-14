@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 
 import { Col, Container, Row } from 'react-bootstrap';
 import { FiCheck } from 'react-icons/fi';
@@ -14,18 +14,26 @@ import { Link } from 'react-router-dom';
 
 import * as S from './styles';
 
-const tags = [...Array(10).keys()].map(x => ({ id: x }));
+// const tags = [...Array(10).keys()].map(x => ({ id: x }));
+import api from '../../services/api';
 
 const Tags = () => {
   const [tagSelected, setTagSelected] = useState([]);
   const [selectedTags, setSelectedTags] = useState([]);
+  const [tags, setTags] = useState([]);
+
+  useEffect(() => {
+    api.get('/tags').then(response => {
+      setTags(response.data);
+    })
+  }, []);
 
   const handleSelectTag = (tag) => {
     // setTagSelected(!tagSelected);
 
-    selectedTags.includes(tag.id)
-      ? setSelectedTags(selectedTags.filter(x => x !== tag.id))
-      : setSelectedTags([...selectedTags, tag.id]);
+    selectedTags.includes(tag.name)
+      ? setSelectedTags(selectedTags.filter(x => x !== tag.name))
+      : setSelectedTags([...selectedTags, tag.name]);
   }
 
   const handleSubmitTags = () => {
@@ -67,14 +75,14 @@ const Tags = () => {
               } */}
 
               <S.DataTitle>
-                Nome da tag
+                {tag.name}
               </S.DataTitle>
 
-              <S.TagQty>50.309 produtos</S.TagQty>
+              <S.TagQty>{tag.games_count} {tag.games_count > 1 ? "produtos" : "produto"}</S.TagQty>
 
               <S.TagActions>
                 <ButtonPrimary key={tag.id} type="button" onClick={() => handleSelectTag(tag)}>
-                  Selecionar {tag.id}
+                  Selecionar
                 </ButtonPrimary>
                 <Link to="/games">
                   Ver jogos
