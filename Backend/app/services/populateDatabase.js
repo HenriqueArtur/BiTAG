@@ -1,4 +1,5 @@
 const got = require("got");
+const { Op } = require("sequelize");
 const { Game, Screenshot, Tag, GamesTags } = require("../models");
 
 exports.populateDatabase = async (timeOut, lastPagSteamSpy, range) => {
@@ -6,9 +7,21 @@ exports.populateDatabase = async (timeOut, lastPagSteamSpy, range) => {
   const storeFront = "https://store.steampowered.com/api/appdetails?appids=";
   const tagsURI = "https://steamspy.com/api.php?request=appdetails&appid=";
 
-  for (let i = lastPagSteamSpy; i >= lastPagSteamSpy - range; i--) {
-    await getGames(steamSpy + i, storeFront, tagsURI);
-  }
+  // try {
+  //   new Promise(() => {
+  //     for (let i = lastPagSteamSpy; i >= lastPagSteamSpy - range; i--) {
+  //       setInterval(async() => {
+  //         await getGames(steamSpy + i, storeFront, tagsURI);
+  //       }, 50)
+  //     }
+  //   }).then(() => {
+  //     calcTagInfos();
+  //   })
+  // } catch (error) {
+  //   calcTagInfos();
+  // }
+
+  calcTagInfos();
 
   // setInterval(() => {
   //   this.populateDatabase(timeOut, lastPagSteamSpy, range);
@@ -42,7 +55,7 @@ async function getGames(steamSpy, storeFront, tagsURI) {
         let tagsReq = await got.get(`${tagsURI}${spJSON[k].appid}`);
         let tagsJSON = JSON.parse(tagsReq.body);
         let tags = tagsJSON.tags;
-        console.log(tags);
+        // console.log(tags);
 
         let screenshots = sfObj.data.screenshots;
 
@@ -123,6 +136,70 @@ async function getGames(steamSpy, storeFront, tagsURI) {
   } catch (error) {
     console.log(error);
   }
+}
+
+async function calcTagInfos() {
+  let allTags = await Tag.findAll();
+  try {
+    for (const tag in allTags) {
+      let gamesCount = await Game.findAndCountAll({
+        include: [
+          {
+            model: Tag,
+            as: "tag",
+            where: { id: allTags[tag].dataValues.id },
+          },
+        ],
+      });
+  
+      let revenue_0k_5k     = await getGamesByRevenue(0, 500000);
+      let revenue_5k_25k    = await getGamesByRevenue(500001, 2500000);
+      let revenue_25k_100k  = await getGamesByRevenue(2500001, 10000000);
+      let revenue_100k_200k = await getGamesByRevenue(10000001, 20000000);
+      let revenue_200k_500k = await getGamesByRevenue(20000001, 50000000);
+      let revenue_500k_1M   = await getGamesByRevenue(50000001, 100000000);
+      let revenue_1M_5M     = await getGamesByRevenue(100000001, 500000000);
+      let revenue_5M        = await getGamesByRevenue(500000001);
+  
+      let revenueCount =
+        revenue_0k_5k
+        + revenue_5k_25k
+        + revenue_25k_100k
+        + revenue_100k_200k
+        + revenue_200k_500k
+        + revenue_500k_1M
+        + revenue_1M_5M
+        + revenue_5M;
+      
+      await allTags[tag].update({
+        games_count: gamesCount.count,
+        revenue_0k_5k: revenue_0k_5k/revenueCount,
+        revenue_5k_25k: revenue_5k_25k/revenueCount,
+        revenue_25k_100k: revenue_25k_100k/revenueCount,
+        revenue_100k_200k: revenue_100k_200k/revenueCount,
+        revenue_200k_500k: revenue_200k_500k/revenueCount,
+        revenue_500k_1M: revenue_500k_1M/revenueCount,
+        revenue_1M_5M: revenue_1M_5M/revenueCount,
+        revenue_5M: revenue_5M/revenueCount,
+      })
+    }
+  } catch (error) {
+    console.log(error);
+  }
+}
+
+async function getGamesByRevenue(min, max) {
+  let revenue = await Game.findAndCountAll({
+    where: { revenue: { [Op.between]: [min, max] } },
+  });
+  return revenue.count;
+}
+
+async function getGamesByRevenue(max) {
+  let revenue = await Game.findAndCountAll({
+    where: { revenue: { [Op.gte]: max } },
+  });
+  return revenue.count;
 }
 
 // function convertDateStringToNumber(date) {
