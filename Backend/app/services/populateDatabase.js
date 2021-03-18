@@ -1,11 +1,50 @@
 const got = require("got");
 const { Op } = require("sequelize");
 const { Game, Screenshot, Tag, GamesTags } = require("../models");
+const fs = require("fs")
 
-exports.populateDatabase = async (timeOut, lastPagSteamSpy, range) => {
-  const steamSpy = "https://steamspy.com/api.php?request=all&page=";
-  const storeFront = "https://store.steampowered.com/api/appdetails?appids=";
-  const tagsURI = "https://steamspy.com/api.php?request=appdetails&appid=";
+populateDatabase = async (timeOut, lastPagSteamSpy, range) => {
+  fs.readFile('./app/services/tagsRef.json', 'utf8', function (err, data) {
+    if (err) throw err;
+    let tags = JSON.parse(data);
+    tags.forEach(async tag => {
+      await Tag.findOrCreate({
+        where: { id: tag['#'] },
+        defaults: {name: tag.Tag},
+      }).catch(err => {
+        console.log(`Erro ao criar tag:\n${err}`);
+      });
+    });
+  }).catch(err => {
+    console.log(`Erro ao ler arquivo:\n${err}`);
+  });
+
+
+  // fs.readFile('./app/services/appsRef.json', 'utf8', function (err, data) {
+  //   if (err) throw err;
+  //   let appsRefJson = JSON.parse(data);
+  //   let apps = appsRefJson.applist.apps
+  //   console.log(apps.length);
+  //   apps.forEach(async app => {
+  //     await Game.findOrCreate({
+  //       where: {id: app.appid},
+  //       defaults: {name: app.name},
+  //     }).catch(err => {
+  //       console.log(err);
+  //     })
+  //     // console.log(`id: ${app.appid}, name: ${app.name}`);
+  //   });
+  // })
+
+
+
+
+
+
+
+  // const steamSpy = "https://steamspy.com/api.php?request=all&page=";
+  // const storeFront = "https://store.steampowered.com/api/appdetails?appids=";
+  // const tagsURI = "https://steamspy.com/api.php?request=appdetails&appid=";
 
   // try {
   //   new Promise(() => {
@@ -21,7 +60,7 @@ exports.populateDatabase = async (timeOut, lastPagSteamSpy, range) => {
   //   calcTagInfos();
   // }
 
-  calcTagInfos();
+  // calcTagInfos();
 
   // setInterval(() => {
   //   this.populateDatabase(timeOut, lastPagSteamSpy, range);
@@ -202,41 +241,74 @@ async function getGamesByRevenue(max) {
   return revenue.count;
 }
 
-// function convertDateStringToNumber(date) {
-//   let months = {
-//     Jan: "01",
-//     Feb: "02",
-//     Mar: "03",
-//     Apr: "04",
-//     May: "05",
-//     Jun: "06",
-//     Jul: "07",
-//     Aug: "08",
-//     Sep: "09",
-//     Oct: "10",
-//     Nov: "11",
-//     Dec: "12",
-//   };
+function populateTags() {
+  fs.readFile('./app/services/tagsRef.json', 'utf8', function (err, data) {
+    if (err) throw err;
+    let tags = JSON.parse(data);
+    tags.forEach(async tag => {
+      await Tag.findOrCreate({
+        where: { id: tag['#'] },
+        defaults: {name: tag.Tag},
+      }).catch(err => {
+        console.log(`Erro ao criar tag:\n${err}`);
+      });
+    });
+  }).catch(err => {
+    console.log(`Erro ao ler arquivo:\n${err}`);
+  });
+}
 
-//   for (let month in months) {
-//     if (date.includes(month)) {
-//       let newDate = date
-//         .replace(month, months[month])
-//         .split(" ")
-//         .reverse()
-//         .join("-");
-//       let dataTypeDate = new Date(newDate);
-//       return dataTypeDate;
-//     }
-//   }
-// }
+function populateGames(pagsAppsArray) {
+  let currentInterval =   3000;
+  let ONE_MINUTE =        (1000 * 60) + currentInterval;
+  let pagsApps =          pagsAppsArray;
+  let pagsLength =        pagsApps.length
+  let pagCount =          0;
 
-// async function createOrUpdate(model, parnsTofind, paransToCreate) {
-//   await model.findOne({ where: parnsTofind }).then(async (game) => {
-//     if (game) return await game.Update(paransToCreate);
-//     return await model.findOrCreate({
-//       where: { id: parnsTofind },
-//       defaults: paransToCreate,
-//     });
-//   });
-// }
+  const steamSpyEndpointAll = "https://steamspy.com/api.php?request=all&page=";
+
+  setInterval(async () => {
+    try {
+      let steamSpyData = await got.get(`${steamSpyEndpointAll}${pagsApps.shift()}`);
+      let steamSpyObj = await JSON.parse(steamSpyData.body);
+      await addGames(steamSpyObj);
+      if(pagCount++ >= pagsLength - 1) process.exit()
+    } catch (error) {
+      console.log(error);
+    }
+  }, ONE_MINUTE);
+}
+
+async function addGames(games) {
+  try {
+    for (const game in games) {
+      let currentGame = games[game];
+  
+      let price =     currentGame.price;
+      let owners =    (currentGame.positive + currentGame.negative) * 50;
+      let revenue =   owners * price * 0.93 * 0.92 * 0.8 * 0.8 * 0.8;
+  
+      let gameMock = {
+        name:               currentGame.name,
+        price:              price,
+        inital_price:       currentGame.initialprice,
+        revenue:            revenue,
+        positive_reviews:   currentGame.positive,
+        negative_reviews:   currentGame.negative,
+        owners:             owners,
+        developer_name:     currentGame.developer,
+        publisher_name:     currentGame.publisher,
+      }
+      await Game.findOrCreate({
+        where: { id: currentGame.appid },
+        defaults: gameMock,
+      });
+    }
+  } catch (error) {
+    console.log(error);    
+  }
+}
+
+populateGames([1, 15, 43]);
+
+// populateDatabase(600000, 43, 0);

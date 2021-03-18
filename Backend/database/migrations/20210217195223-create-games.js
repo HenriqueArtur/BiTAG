@@ -19,23 +19,23 @@ module.exports = {
         type: DataTypes.FLOAT,
       },
       revenue: {
-        allowNull: false,
+        allowNull: true,
         type: DataTypes.FLOAT,
       },
       positive_reviews: {
-        allowNull: false,
+        allowNull: true,
         type: DataTypes.INTEGER,
       },
       negative_reviews: {
-        allowNull: false,
+        allowNull: true,
         type: DataTypes.INTEGER,
       },
       owners: {
-        allowNull: false,
+        allowNull: true,
         type: DataTypes.INTEGER,
       },
       release_date: {
-        allowNull: false,
+        allowNull: true,
         type: DataTypes.STRING,
       },
       website: {
@@ -43,15 +43,15 @@ module.exports = {
         type: DataTypes.STRING,
       },
       developer_name: {
-        allowNull: false,
+        allowNull: true,
         type: DataTypes.STRING,
       },
       publisher_name: {
-        allowNull: false,
+        allowNull: true,
         type: DataTypes.STRING,
       },
       header_image: {
-        allowNull: false,
+        allowNull: true,
         type: DataTypes.STRING,
       },
       about: {
@@ -59,11 +59,11 @@ module.exports = {
         type: DataTypes.TEXT,
       },
       short_description: {
-        allowNull: false,
+        allowNull: true,
         type: DataTypes.TEXT,
       },
       detailed_description: {
-        allowNull: false,
+        allowNull: true,
         type: DataTypes.TEXT,
       },
       createdAt: {
