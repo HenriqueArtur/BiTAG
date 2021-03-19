@@ -309,6 +309,107 @@ async function addGames(games) {
   }
 }
 
-populateGames([1, 15, 43]);
+async function updateGameInfoWithTags() {
+  let idsArray      = []
+  let idsLength     = 0;
+  let ONE_SECOND    = 1000;
+  
+  let gamesId = await Game.findAll({
+    attributes: ["id"],
+  })
+  
+  for (const game in gamesId) {
+    let id = gamesId[game].id
+    idsArray.push(id);    
+  }
+  idsLength = idsArray.length
+  
+  setInterval(async () => {
+    try {
+      let currentId       = idsArray.shift();
 
-// populateDatabase(600000, 43, 0);
+      let steamSPYObj     = await got.get(`https://steamspy.com/api.php?request=appdetails&appid=${currentId}`);
+      let steamAPIObj     = await got.get(`https://store.steampowered.com/api/appdetails?appids=${currentId}`);
+
+      let steamSPY        = JSON.parse(steamSPYObj.body);
+      let steamAPI        = JSON.parse(steamAPIObj.body);
+
+      let tags = steamSPY.tags;
+
+      addTagsToGame(currentId, tags);
+      updateGameWithNewParams(currentId, steamAPI);
+      idsLength--;
+      if(idsLength <= 0) process.exit()
+    } catch (error) {
+      console.log(error);
+    }
+  }, ONE_SECOND)
+}
+
+async function addTagsToGame(gameId, tagsObj) {
+  for (const tag in tagsObj) {
+    let name = tag;
+    try {
+      let currentTag = await Tag.findOne({
+        where: {name: name}
+      });
+
+      let currentGame = await Game.findOne({
+        where: {id: gameId}
+      });
+
+      await GamesTags.findOrCreate({
+        where: {
+          id_tag:     currentTag.dataValues.id,
+          id_game:    currentGame.dataValues.id,
+        },
+      });
+    } catch (error) {
+      console.log(error);      
+    }
+  }
+}
+
+async function updateGameWithNewParams(id, steamAPI) {
+  let gameData              = steamAPI[id].data;
+
+  let release_date          = gameData.release_date.date || '';
+  let website               = gameData.website;
+  let header_image          = gameData.header_image;
+  let about                 = gameData.about_the_game
+                                .replace(/(<([^>]+)>)/gi, "")
+                                .replace(/&quot;/g,'"')
+                                .replace(/\[(.*?)\]/g, "")
+                                .replace(/\【(.*?)\】/g, "");
+  let short_description     = gameData.short_description
+                                .replace(/(<([^>]+)>)/gi, "")
+                                .replace(/&quot;/g,'"')
+                                .replace(/\[(.*?)\]/g, "")
+                                .replace(/\【(.*?)\】/g, "");
+  let detailed_description  = gameData.detailed_description
+                                .replace(/(<([^>]+)>)/gi, "")
+                                .replace(/&quot;/g,'"')
+                                .replace(/\[(.*?)\]/g, "")
+                                .replace(/\【(.*?)\】/g, "");
+
+  let newParansToGame = {
+    release_date:           release_date,
+    website:                website,
+    header_image:           header_image,
+    about:                  about,
+    short_description:      short_description,
+    detailed_description:   detailed_description,
+  }
+
+  try {
+    let game = await Game.findOne({
+      where: {id: id}
+    });
+
+    game.update(newParansToGame)
+  } catch (error) {
+    console.log(error);
+  }
+}
+
+updateGameInfoWithTags();
