@@ -5,7 +5,6 @@ module.exports = {
     return queryInterface.createTable("Tags", {
       id: {
         allowNull: false,
-        autoIncrement: true,
         primaryKey: true,
         type: DataTypes.INTEGER,
       },
