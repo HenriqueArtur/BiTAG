@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 
-import { Col, Container, Row } from 'react-bootstrap';
+import { Col, Container, Row, Spinner } from 'react-bootstrap';
 import { FiCheck } from 'react-icons/fi';
 
 import { ButtonPrimary } from '../../components/CustomButton';
@@ -24,13 +24,22 @@ const Tags = () => {
 
   const [searchTerm, setSearchTerm] = useState("");
 
-  useEffect(() => {
-    api.get('/tags')
-    .then(response => {
-      setTags(response.data);
-    }).catch(err => {
+  const [loading, setLoading] = useState(false);
+
+  const fetchTags = async () => {
+    try {
+      await api.get('/tags')
+      .then(response => {
+        setTags(response.data);
+      });
+      setLoading(true);
+    } catch (err) {
       console.log(err);
-    });
+    }
+  }
+
+  useEffect(() => {
+    fetchTags();
   }, [searchTerm]);
 
   const handleSelectTag = (tag) => {
@@ -85,33 +94,43 @@ const Tags = () => {
           </Col>
         </Row>
 
-        <Row className="flex-100 justify-content-between px-md-5">
-          {tags.map(tag => (
-            <S.TagCard key={tag.id} bordered={selectedTags.includes(tag.name) ? true : false}>
-              {
-                selectedTags.includes(tag.name) &&
-                <FiCheck size="20"/>
-              }
+        {
+          loading ? (
+            <Row className="flex-100 justify-content-between px-md-5">
+              {tags.map(tag => (
+                <S.TagCard key={tag.id} bordered={selectedTags.includes(tag.name) ? true : false}>
+                  {
+                    selectedTags.includes(tag.name) &&
+                    <FiCheck size="20"/>
+                  }
 
-              <S.DataTitle>
-                {tag.name}
-              </S.DataTitle>
+                  <S.DataTitle>
+                    {tag.name}
+                  </S.DataTitle>
 
-              <S.TagQty>{tag.games_count} {tag.games_count > 1 ? "produtos" : "produto"}</S.TagQty>
-              {
-                !selectedTags.includes(tag.name) &&
-                  <S.TagActions>
-                    <ButtonPrimary key={tag.id} type="button" onClick={() => handleSelectTag(tag)}>
-                      Selecionar
-                    </ButtonPrimary>
-                    <Link to={{pathname: `/gamestags/${tag.name}`}}>
-                      Ver jogos
-                    </Link>
-                  </S.TagActions>
-              }
-            </S.TagCard>
-          ))}
-        </Row>
+                  <S.TagQty>{tag.games_count} {tag.games_count > 1 ? "produtos" : "produto"}</S.TagQty>
+                  {
+                    !selectedTags.includes(tag.name) &&
+                      <S.TagActions>
+                        <ButtonPrimary key={tag.id} type="button" onClick={() => handleSelectTag(tag)}>
+                          Selecionar
+                        </ButtonPrimary>
+                        <Link to={{pathname: `/gamestags/${tag.name}`}}>
+                          Ver jogos
+                        </Link>
+                      </S.TagActions>
+                  }
+                </S.TagCard>
+              ))}
+            </Row>
+          ) : (
+            <Row className="flex-100 justify-content-center">
+              <Spinner animation="border" role="status">
+                <span className="sr-only">Loading...</span>
+              </Spinner>
+            </Row>
+          )
+        }
       </Container>
     </div>
   );

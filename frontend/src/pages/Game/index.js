@@ -43,7 +43,7 @@ const Games = () => {
 
   return (
     <div id="page-game">
-         <Container className="d-flex flex-column">
+      <Container className="d-flex flex-column">
         <Row>
           <Col>
             <Link to="/games">
@@ -57,6 +57,11 @@ const Games = () => {
           {game.map(game => (
             <Col key={game.id} md="3" lg="3">
               <GameCard game={game} />
+              <S.GameText>
+                <h3>Developer name</h3>
+                <p>{game.developer_name}</p>
+              </S.GameText>
+
               <S.GameMetric>
                 <h3>Initial Price</h3>
                 <p>

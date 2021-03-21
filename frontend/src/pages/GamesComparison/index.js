@@ -60,6 +60,11 @@ const Games = () => {
               <>
                 <GameCard game={games[0]} />
 
+                <S.GameText>
+                  <h3>Developer name</h3>
+                  <p>{games[0].developer_name}</p>
+                </S.GameText>
+
                 <S.GameMetric>
                   <h3>Initial Price</h3>
                   <p>
@@ -220,6 +225,11 @@ const Games = () => {
               dataLoaded &&
               <>
                 <GameCard game={games[1]} />
+
+                <S.GameText>
+                  <h3>Developer name</h3>
+                  <p>{games[1].developer_name}</p>
+                </S.GameText>
 
                 <S.GameMetric>
                   <h3>Initial Price</h3>
