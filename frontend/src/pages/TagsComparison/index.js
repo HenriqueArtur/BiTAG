@@ -23,7 +23,7 @@ const TagsComparison = (props) => {
   }, [search]);
 
   return (
-    <div id="page-tags-comparison">
+    <div id="page-tagscomparison">
       <Container>
         <Row>
           <Link to="/tags">

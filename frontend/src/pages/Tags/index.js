@@ -104,11 +104,8 @@ const Tags = () => {
                     <ButtonPrimary key={tag.id} type="button" onClick={() => handleSelectTag(tag)}>
                       Selecionar
                     </ButtonPrimary>
-                    <Link to="/games">
+                    <Link to={{pathname: `/gamestags/${tag.name}`}}>
                       Ver jogos
-                    </Link>
-                    <Link to="/">
-                      Ver descrição
                     </Link>
                   </S.TagActions>
               }

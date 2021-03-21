@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 
 import { Col, Container, Row } from 'react-bootstrap';
 import { FiCheck } from 'react-icons/fi';
@@ -13,9 +13,22 @@ import SearchBar from '../../components/SearchBar';
 
 import * as S from './styles';
 
+import api from '../../services/api';
+
 const Games = () => {
   const [visible, setVisible] = useState(true);
   const [selected, setSelected] = useState(false);
+
+  const [games, setGames] = useState([]);
+
+  useEffect(() => {
+    api.get(`/api/games`)
+    .then(response => {
+      setGames(response.data);
+    }).catch(err => {
+      console.log(err);
+    });
+  }, []);
 
   function handleSelectGame() {
     setSelected(!selected);
@@ -38,76 +51,34 @@ const Games = () => {
         </Row>
 
         <Row className="flex-100 justify-content-between">
-          <Col md="6" lg="4" className="mb-4">
-            <S.GameCard>
-              <S.ImageWrapper selected={selected ? 1 : 0}>
-                <img src="https://cdn.cloudflare.steamstatic.com/steam/apps/1482130/header.jpg?t=1614479631" alt="game logo" />
+          {games.map(game => (
+            <Col key={game.id} md="6" lg="4" className="mb-4">
+              <S.GameCard>
+                <S.ImageWrapper selected={selected ? 1 : 0}>
+                  <img src={game.header_image} alt="game cover" />
 
-                <S.GameActions>
-                  <ButtonPrimary onClick={handleSelectGame} uppercase type="button">
-                    Comparar
-                  </ButtonPrimary>
+                  <S.GameActions>
+                    <ButtonPrimary onClick={handleSelectGame} uppercase type="button">
+                      Comparar
+                    </ButtonPrimary>
 
-                  <S.ViewGame to="/game" uppercase visible={visible ? 1 : 0}>
-                    Analisar
-                  </S.ViewGame>
-                </S.GameActions>
+                    <S.ViewGame to={{pathname: `/game/${game.name}`}} uppercase visible={visible ? 1 : 0}>
+                      Analisar
+                    </S.ViewGame>
+                  </S.GameActions>
 
-                <S.GameSelected>
-                  <FiCheck size="20" color="#222"/>
-                  <h3>Selecionado</h3>
-                </S.GameSelected>
-              </S.ImageWrapper>
-              <S.GameInfo>
-                <h3>Nome do Jogo</h3>
-                <p>Estúdio</p>
-              </S.GameInfo>
-            </S.GameCard>
-          </Col>
-
-          <Col md="6" lg="4" className="mb-4">
-            <S.GameCard>
-              <S.ImageWrapper selected={selected ? 1 : 0}>
-                <img src="https://cdn.cloudflare.steamstatic.com/steam/apps/694280/header.jpg?t=1614158765" alt="game logo" />
-
-                <S.GameActions>
-                  <ButtonPrimary onClick={handleSelectGame} uppercase type="button">
-                    Comparar
-                  </ButtonPrimary>
-
-                  <S.ViewGame to="/game" uppercase visible={visible ? 1 : 0}>
-                    Analisar
-                  </S.ViewGame>
-                </S.GameActions>
-              </S.ImageWrapper>
-              <S.GameInfo>
-                <h3>Nome do Jogo</h3>
-                <p>Estúdio</p>
-              </S.GameInfo>
-            </S.GameCard>
-          </Col>
-
-          <Col md="6" lg="4" className="mb-4">
-            <S.GameCard>
-              <S.ImageWrapper selected={selected ? 1 : 0}>
-                <img src="https://cdn.cloudflare.steamstatic.com/steam/apps/1482130/header.jpg?t=1614479631" alt="game logo" />
-
-                <S.GameActions>
-                  <ButtonPrimary onClick={handleSelectGame} uppercase type="button">
-                    Comparar
-                  </ButtonPrimary>
-
-                  <S.ViewGame to="/game" uppercase visible={visible ? 1 : 0}>
-                    Analisar
-                  </S.ViewGame>
-                </S.GameActions>
-              </S.ImageWrapper>
-              <S.GameInfo>
-                <h3>Nome do Jogo</h3>
-                <p>Estúdio</p>
-              </S.GameInfo>
-            </S.GameCard>
-          </Col>
+                  <S.GameSelected>
+                    <FiCheck size="20" color="#222"/>
+                    <h3>Selecionado</h3>
+                  </S.GameSelected>
+                </S.ImageWrapper>
+                <S.GameInfo>
+                  <h3>{game.name}</h3>
+                  <p>{game.publisher_name}</p>
+                </S.GameInfo>
+              </S.GameCard>
+            </Col>
+          ))}
         </Row>
       </Container>
     </div>

@@ -7,11 +7,11 @@ const GameCard = ({game}) => {
     <>
       <S.GameCard>
         <S.ImageWrapper>
-          <img src="https://cdn.cloudflare.steamstatic.com/steam/apps/1482130/header.jpg?t=1614479631" alt="game logo" />
+          <img src={game.header_image} alt="game logo" />
         </S.ImageWrapper>
         <S.GameInfo>
-          <h3>Nome do Jogo</h3>
-          <p>Estúdio</p>
+          <h3>{game.name}</h3>
+          <p>{game.publisher_name}</p>
         </S.GameInfo>
       </S.GameCard>
     </>

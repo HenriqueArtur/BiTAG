@@ -6,6 +6,10 @@ export const GameMetric = styled.div`
     margin: 0 0 .8rem;
   }
 
+  a {
+    color: var(--main-color) !important;
+  }
+
   p {
     color: var(--main-color);
     font-size: 2rem;
@@ -44,5 +48,22 @@ export const GameData = styled.div`
     letter-spacing: 0.01em;
     margin: 0;
     text-align: center;
+  }
+`;
+
+export const GameText = styled.div`
+  margin: 2.5rem 0 0;
+
+  h3 {
+    color: var(--main-color);
+    font-size: 1rem;
+    margin: 0 0 .8rem;
+  }
+
+  p {
+    font-size: 1rem;
+    font-weight: 400;
+    margin: 0;
+    text-align: left;
   }
 `;

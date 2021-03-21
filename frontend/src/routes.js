@@ -6,6 +6,7 @@ import Header from './components/Header';
 import Tags from './pages/Tags';
 import TagsComparison from './pages/TagsComparison';
 import Games from './pages/Games';
+import GamesTags from './pages/GamesTags';
 import GamesComparison from './pages/GamesComparison';
 import Game from './pages/Game';
 
@@ -17,8 +18,9 @@ export default function Routes() {
         <Route exact path={["/", "/tags"]} component={Tags} />
         <Route path="/tagscomparison" component={TagsComparison} />
         <Route path="/games" component={Games} />
+        <Route path="/gamestags/:tag_name" component={GamesTags} />
         <Route path="/gamescomparison" component={GamesComparison} />
-        <Route path="/game" component={Game} />
+        <Route path="/game/:game_name" component={Game} />
       </Switch>
     </BrowserRouter>
   );
