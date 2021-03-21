@@ -36,20 +36,22 @@ const GamesTags = () => {
     });
   }, [tag_name, searchTerm]);
 
-  const handleSubmitGames = () => {
-    history.push({
-      pathname: "/gamescomparison/findByName",
-      search: `?games=${selectedGames.join(",")}`
-    });
-  }
+  useEffect(() => {
+    const handleSubmitGames = () => {
+      selectedGames.length >= 2 &&
+      history.push({
+        pathname: "/gamescomparison/findByName",
+        search: `?names=${selectedGames.join(",")}`
+      });
+    }
+
+    handleSubmitGames();
+  }, [selectedGames, history]);
 
   const handleSelectGames = (game) => {
     selectedGames.includes(game.name)
       ? setSelectedGames(selectedGames.filter(x => x !== game.name))
       : setSelectedGames([...selectedGames, game.name]);
-
-    selectedGames.length >= 2 &&
-    handleSubmitGames();
   }
 
   const handleSearchGames = () => {
@@ -60,10 +62,7 @@ const GamesTags = () => {
     );
   }
   return (
-    <div id="page-games">
-      {
-        console.log(selectedGames)
-      }
+    <div id="page-gamestags">
       <Container className="d-flex flex-column">
         <Row className="align-items-center flex-100 justify-content-between mb-4">
           <Col sm="12" md="4" className="mb-3 mb-md-0">
@@ -85,27 +84,35 @@ const GamesTags = () => {
         <Row className="flex-100 justify-content-between">
           {gamesTags.map(game => (
             <Col key={game.id} md="6" lg="4" className="mb-4">
-              <S.GameCard>
+              <S.GameCard selected={selectedGames.includes(game.name) ? true : false}>
                 <S.ImageWrapper>
                   <img src={game.header_image} alt="game cover" />
 
-                  <S.GameActions>
-                    <ButtonPrimary onClick={() => handleSelectGames(game)} uppercase type="button">
-                      Comparar
-                    </ButtonPrimary>
-                    {
-                      selectedGames.length < 1 &&
-                      <S.ViewGame to={{pathname: `/game/${game.name}`}} uppercase>
-                        Analisar
-                      </S.ViewGame>
-                    }
+                  {
+                    !selectedGames.includes(game.name) &&
+                    <S.GameActions>
 
-                  </S.GameActions>
+                      <ButtonPrimary onClick={() => handleSelectGames(game)} uppercase type="button">
+                        Comparar
+                      </ButtonPrimary>
+                      {
+                        selectedGames.length < 1 &&
+                        <S.ViewGame to={{pathname: `/game/${game.name}`}} uppercase>
+                          Analisar
+                        </S.ViewGame>
+                      }
 
-                  <S.GameSelected>
-                    <FiCheck size="20" color="#222"/>
-                    <h3>Selecionado</h3>
-                  </S.GameSelected>
+                    </S.GameActions>
+                  }
+
+                  {
+                    selectedGames.includes(game.name) &&
+                    <S.GameSelected>
+                      <FiCheck size="20" color="#222"/>
+                      <h3>Selecionado</h3>
+                    </S.GameSelected>
+                  }
+
                 </S.ImageWrapper>
                 <S.GameInfo>
                   <h3>{game.name}</h3>

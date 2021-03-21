@@ -169,7 +169,7 @@ const Games = () => {
               </Col>
             </Row>
             <Row className="mt-5">
-              <Col>
+              {/* <Col>
                 <Row>
                   <Col>
                     <S.InfoHeading>
@@ -195,7 +195,7 @@ const Games = () => {
                     </S.GameData>
                   </Col>
                 </Row>
-              </Col>
+              </Col> */}
             </Row>
 
           </Col>
