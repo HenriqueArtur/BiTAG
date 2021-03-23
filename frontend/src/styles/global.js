@@ -12,6 +12,10 @@ export default createGlobalStyle`
     outline: 0;
   }
 
+  html {
+    scroll-behavior: smooth;
+  }
+
   @media(max-width: 1024px) {
     html {
       font-size: 93.75%;
@@ -78,6 +82,18 @@ export default createGlobalStyle`
       padding: .6rem;
     }
   }
+
+  @keyframes move {
+    0%, 100% {
+      transform: translateY(0);
+      opacity: 0;
+    }
+    50% {
+      transform: translateY(1rem);
+      opacity: 1;
+    }
+  }
+
 
   @media (min-width: 768px) {
     .container, .container-lg, .container-md, .container-sm, .container-xl {

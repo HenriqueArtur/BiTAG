@@ -90,7 +90,7 @@ const Games = () => {
             <Row className="flex-100 justify-content-between">
               {games.map(game => (
                 <Col key={game.id} md="6" lg="4" className="mb-4">
-                  <S.GameCard>
+                  <S.GameCard selected={selectedGames.includes(game.name) ? true : false}>
                     <S.ImageWrapper>
                       <img src={game.header_image} alt="game cover" />
 
