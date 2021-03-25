@@ -37,6 +37,7 @@ const TagsComparison = (props) => {
             <thead>
               <S.TRow>
                 <S.THead>Selected Tags</S.THead>
+                <S.THead>Games count</S.THead>
                 <S.THead>Revenue 0k-5k</S.THead>
                 <S.THead>Revenue 5k-25k</S.THead>
                 <S.THead>Revenue 25k-100k</S.THead>
@@ -44,7 +45,7 @@ const TagsComparison = (props) => {
                 <S.THead>Revenue 200k-500k</S.THead>
                 <S.THead>Revenue 500k-1M</S.THead>
                 <S.THead>Revenue 1M-5M</S.THead>
-                <S.THead>Revenue 5M</S.THead>
+                <S.THead>Revenue > 5M</S.THead>
               </S.TRow>
             </thead>
             <tbody>
@@ -53,6 +54,9 @@ const TagsComparison = (props) => {
                   <S.DataTitle>
                     {tag.name}
                   </S.DataTitle>
+                  <S.TData>
+                    {tag.games_count}
+                  </S.TData>
                   <S.TData>
                     <NumberFormat
                       displayType={'text'}
