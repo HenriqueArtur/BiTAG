@@ -16,9 +16,9 @@ app.get("/", (req, res) => {
   res.json({ message: "Welcome to BiTAG application." });
 });
 
-app.get("/tags", Tag.findAll);
-app.get("/tags/findByName", Tag.findByName);
-app.get("/tags/findByOptions", Tag.findByOptions);
+app.get("/api/tags", Tag.findAll);
+app.get("/api/tags/findByName", Tag.findByName);
+app.get("/api/tags/findByOptions", Tag.findByOptions);
 
 app.get("/api/games", Game.findAll);
 app.get("/api/games/findByName", Game.findByName);
