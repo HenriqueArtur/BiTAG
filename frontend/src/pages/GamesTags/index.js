@@ -43,22 +43,17 @@ const GamesTags = () => {
     fetchGamesTags();
   }, [tag_name, searchTerm]);
 
-  useEffect(() => {
-    const handleSubmitGames = () => {
-      selectedGames.length >= 2 &&
-      history.push({
-        pathname: "/gamescomparison/findByName",
-        search: `?names=${selectedGames.join(",")}`
-      });
-    }
-
-    handleSubmitGames();
-  }, [selectedGames, history]);
-
   const handleSelectGames = (game) => {
     selectedGames.includes(game.name)
       ? setSelectedGames(selectedGames.filter(x => x !== game.name))
       : setSelectedGames([...selectedGames, game.name]);
+  }
+
+  const handleSubmitGames = () => {
+    history.push({
+      pathname: "/gamescomparison/findByName",
+      search: `?names=${selectedGames.join(",")}`
+    });
   }
 
   const handleSearchGames = () => {
@@ -76,6 +71,17 @@ const GamesTags = () => {
             <Filter />
 
             <Sorter />
+          </Col>
+
+          <Col sm="12" md="4" className="mb-3 mb-md-0 text-center">
+            {
+              selectedGames.length >= 1 &&
+              <ButtonPrimary onClick={() => handleSubmitGames()} className="px-5 py-3" type="button" uppercase>
+                Analisar
+              </ButtonPrimary>
+            }
+
+            <S.GameCounter>Analisando {selectedGames.length} {selectedGames.length > 1 ? "jogos" : "jogo"}</S.GameCounter>
           </Col>
 
           <Col sm="12" md="4">
@@ -100,14 +106,17 @@ const GamesTags = () => {
                       {
                         !selectedGames.includes(game.name) &&
                         <S.GameActions>
+                          {
+                            selectedGames.length <= 4 &&
+                            <ButtonPrimary onClick={() => handleSelectGames(game)} uppercase type="button">
+                              Selecionar
+                            </ButtonPrimary>
+                          }
 
-                          <ButtonPrimary onClick={() => handleSelectGames(game)} uppercase type="button">
-                            Comparar
-                          </ButtonPrimary>
                           {
                             selectedGames.length < 1 &&
                             <S.ViewGame to={{pathname: `/game/${game.name}`}} uppercase>
-                              Analisar
+                              Visualizar
                             </S.ViewGame>
                           }
 

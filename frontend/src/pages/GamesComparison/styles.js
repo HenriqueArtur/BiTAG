@@ -2,22 +2,31 @@ import styled from 'styled-components';
 
 import { ButtonPrimary } from '../../components/CustomButton';
 
+export const GameColumn = styled.div`
+  border-bottom: 1px solid var(--color-light);
+  margin: 0 0 3rem;
+  padding: 0 0 1rem;
+`;
+
 export const GameMetric = styled.div`
+  display: flex;
+
   h3 {
-    font-size: 1rem;
-    margin: 0 0 .8rem;
+    color: var(--main-color);
+    font-size: 1.1rem;
+    margin: 0 .2rem 0 0;
   }
 
   p {
-    color: var(--main-color);
-    font-size: 2rem;
+    color: var(--color-white);
+    font-size: 1.1rem;
     font-weight: 700;
     letter-spacing: 0.01em;
     margin: 0;
   }
 
   * + & {
-    margin-top: 2.5rem;
+    margin-top: .3rem;
   }
 `;
 
@@ -51,12 +60,13 @@ export const GameData = styled.div`
 
 
 export const GameText = styled.div`
-  margin: 2.5rem 0 0;
+  display: flex;
+  margin: 1rem 0 0;
 
   h3 {
     color: var(--main-color);
     font-size: 1rem;
-    margin: 0 0 .8rem;
+    margin: 0 .2rem 0 0;
   }
 
   p {

@@ -25,6 +25,7 @@ export const GameInfo = styled.div`
 
   h3 {
     font-size: 1rem;
+    margin-bottom: .2rem;
   }
 
   p {

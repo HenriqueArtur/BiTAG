@@ -56,98 +56,89 @@ const Games = () => {
         <Row className="flex-100 mt-4 justify-content-start">
           {game.map(game => (
             <Col key={game.id} md="3" lg="3">
-              <GameCard game={game} />
-              <S.GameText>
-                <h3>Developer name</h3>
-                <p>{game.developer_name}</p>
-              </S.GameText>
+              <S.GameColumn>
+                <GameCard game={game} />
+                <S.GameText>
+                  <h3>Publisher name</h3>
+                  <p>{game.publisher_name}</p>
+                </S.GameText>
 
-              <S.GameMetric>
-                <h3>Initial Price</h3>
-                <p>
-                  <NumberFormat
-                    displayType={'text'}
-                    thousandSeparator={true}
-                    prefix={'$'}
-                    decimalScale={2}
-                    value={game.inital_price / 100}
-                  />
-                </p>
-              </S.GameMetric>
+                <S.GameText className="mb-4">
+                  <p>{game.short_description}</p>
+                </S.GameText>
 
-              <S.GameMetric>
-                <h3>Price</h3>
-                <p>
-                  <NumberFormat
-                    displayType={'text'}
-                    thousandSeparator={true}
-                    prefix={'$'}
-                    decimalScale={2}
-                    value={game.price / 100}
-                  />
-                </p>
-              </S.GameMetric>
+                <S.GameMetric>
+                  <h3>Initial Price:</h3>
+                  <p>
+                    <NumberFormat
+                      displayType={'text'}
+                      thousandSeparator={true}
+                      prefix={'$'}
+                      decimalScale={2}
+                      value={game.inital_price / 100}
+                    />
+                  </p>
+                </S.GameMetric>
 
-              <S.GameMetric>
-                <h3>Revenue</h3>
-                <p>
-                  <NumberFormat
-                    displayType={'text'}
-                    thousandSeparator={true}
-                    prefix={'$'}
-                    decimalScale={2}
-                    value={game.revenue / 100}
-                  />
-                </p>
-              </S.GameMetric>
+                <S.GameMetric>
+                  <h3>Price:</h3>
+                  <p>
+                    <NumberFormat
+                      displayType={'text'}
+                      thousandSeparator={true}
+                      prefix={'$'}
+                      decimalScale={2}
+                      value={game.price / 100}
+                    />
+                  </p>
+                </S.GameMetric>
 
-              <S.GameMetric>
-                <h3>Positive Reviews</h3>
-                <p>
-                  {game.positive_reviews}
-                </p>
-              </S.GameMetric>
+                <S.GameMetric>
+                  <h3>Revenue:</h3>
+                  <p>
+                    <NumberFormat
+                      displayType={'text'}
+                      thousandSeparator={true}
+                      prefix={'$'}
+                      decimalScale={2}
+                      value={game.revenue / 100}
+                    />
+                  </p>
+                </S.GameMetric>
 
-              <S.GameMetric>
-                <h3>Negative Reviews</h3>
-                <p>
-                  {game.negative_reviews}
-                </p>
-              </S.GameMetric>
+                <S.GameMetric>
+                  <h3>Positive Reviews:</h3>
+                  <p>
+                    {game.positive_reviews}
+                  </p>
+                </S.GameMetric>
 
-              <S.GameMetric>
-                <h3>Owners</h3>
-                <p>
-                  {game.owners}
-                </p>
-              </S.GameMetric>
+                <S.GameMetric>
+                  <h3>Negative Reviews:</h3>
+                  <p>
+                    {game.negative_reviews}
+                  </p>
+                </S.GameMetric>
 
-              <S.GameMetric>
-                <h3>Release Date</h3>
-                <p>
-                  {game.release_date}
-                </p>
-              </S.GameMetric>
+                <S.GameMetric>
+                  <h3>Owners:</h3>
+                  <p>
+                    {game.owners}
+                  </p>
+                </S.GameMetric>
 
-              <S.GameMetric>
-                <h3>Website</h3>
-                <a href={game.website} target="_blank" rel="noreferrer">Access Website</a>
-              </S.GameMetric>
+                <S.GameMetric>
+                  <h3>Release Date:</h3>
+                  <p>
+                    {game.release_date}
+                  </p>
+                </S.GameMetric>
 
-              <S.GameText>
-                <h3>Short Description</h3>
-                <p>{game.short_description}</p>
-              </S.GameText>
-
-              <S.GameText>
-                <h3>Detailed Description</h3>
-                <p>{game.detailed_description}</p>
-              </S.GameText>
-
-              <S.GameText>
-                <h3>About</h3>
-                <p>{game.about}</p>
-              </S.GameText>
+                <S.GameMetric>
+                  <h3>Website:</h3>
+                  <a href={game.website} target="_blank" rel="noreferrer">Access Website</a>
+                </S.GameMetric>
+              </S.GameColumn>
             </Col>
           ))}
 

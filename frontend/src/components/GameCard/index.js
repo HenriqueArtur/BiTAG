@@ -11,7 +11,7 @@ const GameCard = ({game}) => {
         </S.ImageWrapper>
         <S.GameInfo>
           <h3>{game.name}</h3>
-          <p>{game.publisher_name}</p>
+          <p>{game.developer_name}</p>
         </S.GameInfo>
       </S.GameCard>
     </>

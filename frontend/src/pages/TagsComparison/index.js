@@ -45,7 +45,7 @@ const TagsComparison = (props) => {
                 <S.THead>Revenue 200k-500k</S.THead>
                 <S.THead>Revenue 500k-1M</S.THead>
                 <S.THead>Revenue 1M-5M</S.THead>
-                <S.THead>Revenue > 5M</S.THead>
+                <S.THead>Revenue &gt; 5M</S.THead>
               </S.TRow>
             </thead>
             <tbody>

@@ -7,15 +7,12 @@ import { FiChevronLeft } from 'react-icons/fi';
 import * as S from './styles';
 import GameCard from '../../components/GameCard';
 
-import NumberFormat from 'react-number-format';
-
 // import ChartBar from '../../components/ChartBar';
 // import axios from 'axios';
 
 import api from '../../services/api';
 
 const Games = () => {
-  const [dataLoaded, setDataLoaded] = useState(false);
   const [games, setGames] = useState([]);
   const history = useHistory();
 
@@ -24,7 +21,6 @@ const Games = () => {
   useEffect(() => {
     api.get(`/api/games/findByName${search}`).then(response => {
       setGames(response.data);
-      setDataLoaded(true);
     });
   }, [search]);
 
@@ -55,106 +51,48 @@ const Games = () => {
 
         <Row className="flex-100 mt-4 justify-content-between">
           <Col md="3" lg="3" className="mb-5 mb-md-0">
-            {
-              dataLoaded &&
-              <>
-                <GameCard game={games[0]} />
+            {games.map((game) => (
+              <S.GameColumn key={game.id}>
+                <GameCard game={game} />
 
                 <S.GameText>
-                  <h3>Developer name</h3>
-                  <p>{games[0].developer_name}</p>
+                  <h3>Publisher name:</h3>
+                  <p>{game.publisher_name}</p>
+                </S.GameText>
+
+                <S.GameText className="mb-4">
+                  <p>{game.short_description}</p>
                 </S.GameText>
 
                 <S.GameMetric>
-                  <h3>Initial Price</h3>
+                  <h3>Positive Reviews:</h3>
                   <p>
-                    <NumberFormat
-                      displayType={'text'}
-                      thousandSeparator={true}
-                      prefix={'$'}
-                      decimalScale={2}
-                      value={games[0].inital_price / 100}
-                    />
+                    {game.positive_reviews}
                   </p>
                 </S.GameMetric>
 
                 <S.GameMetric>
-                  <h3>Price</h3>
+                  <h3>Negative Reviews:</h3>
                   <p>
-                    <NumberFormat
-                      displayType={'text'}
-                      thousandSeparator={true}
-                      prefix={'$'}
-                      decimalScale={2}
-                      value={games[0].price / 100}
-                    />
+                    {game.negative_reviews}
                   </p>
                 </S.GameMetric>
 
                 <S.GameMetric>
-                  <h3>Revenue</h3>
+                  <h3>Release Date:</h3>
                   <p>
-                    <NumberFormat
-                      displayType={'text'}
-                      thousandSeparator={true}
-                      prefix={'$'}
-                      decimalScale={2}
-                      value={games[0].revenue / 100}
-                    />
+                    {game.release_date}
                   </p>
                 </S.GameMetric>
 
-                <S.GameMetric>
-                  <h3>Positive Reviews</h3>
-                  <p>
-                    {games[0].positive_reviews}
-                  </p>
-                </S.GameMetric>
-
-                <S.GameMetric>
-                  <h3>Negative Reviews</h3>
-                  <p>
-                    {games[0].negative_reviews}
-                  </p>
-                </S.GameMetric>
-
-                <S.GameMetric>
-                  <h3>Owners</h3>
-                  <p>
-                    {games[0].owners}
-                  </p>
-                </S.GameMetric>
-
-                <S.GameMetric>
-                  <h3>Release Date</h3>
-                  <p>
-                    {games[0].release_date}
-                  </p>
-                </S.GameMetric>
-
-                { games[0].website &&
+                { game.website &&
                   <S.GameMetric>
-                    <h3>Website</h3>
-                    <a href={games[0].website} target="_blank" rel="noreferrer">Access Website</a>
+                    <h3>Website:</h3>
+                    <a href={game.website} target="_blank" rel="noreferrer">Access Website</a>
                   </S.GameMetric>
                 }
-
-                <S.GameText>
-                  <h3>Short Description</h3>
-                  <p>{games[0].short_description}</p>
-                </S.GameText>
-
-                <S.GameText>
-                  <h3>Detailed Description</h3>
-                  <p>{games[0].detailed_description}</p>
-                </S.GameText>
-
-                <S.GameText>
-                  <h3>About</h3>
-                  <p>{games[0].about}</p>
-                </S.GameText>
-              </>
-            }
+              </S.GameColumn>
+            ))}
           </Col>
 
           <Col md="6" lg="6" className="mb-5 mb-md-0">
@@ -218,109 +156,6 @@ const Games = () => {
               </Col> */}
             </Row>
 
-          </Col>
-
-          <Col md="3" lg="3">
-            {
-              dataLoaded &&
-              <>
-                <GameCard game={games[1]} />
-
-                <S.GameText>
-                  <h3>Developer name</h3>
-                  <p>{games[1].developer_name}</p>
-                </S.GameText>
-
-                <S.GameMetric>
-                  <h3>Initial Price</h3>
-                  <p>
-                    <NumberFormat
-                      displayType={'text'}
-                      thousandSeparator={true}
-                      prefix={'$'}
-                      decimalScale={2}
-                      value={games[1].inital_price / 100}
-                    />
-                  </p>
-                </S.GameMetric>
-
-                <S.GameMetric>
-                  <h3>Price</h3>
-                  <p>
-                    <NumberFormat
-                      displayType={'text'}
-                      thousandSeparator={true}
-                      prefix={'$'}
-                      decimalScale={2}
-                      value={games[1].price / 100}
-                    />
-                  </p>
-                </S.GameMetric>
-
-                <S.GameMetric>
-                  <h3>Revenue</h3>
-                  <p>
-                    <NumberFormat
-                      displayType={'text'}
-                      thousandSeparator={true}
-                      prefix={'$'}
-                      decimalScale={2}
-                      value={games[1].revenue / 100}
-                    />
-                  </p>
-                </S.GameMetric>
-
-                <S.GameMetric>
-                  <h3>Positive Reviews</h3>
-                  <p>
-                    {games[1].positive_reviews}
-                  </p>
-                </S.GameMetric>
-
-                <S.GameMetric>
-                  <h3>Negative Reviews</h3>
-                  <p>
-                    {games[1].negative_reviews}
-                  </p>
-                </S.GameMetric>
-
-                <S.GameMetric>
-                  <h3>Owners</h3>
-                  <p>
-                    {games[1].owners}
-                  </p>
-                </S.GameMetric>
-
-                <S.GameMetric>
-                  <h3>Release Date</h3>
-                  <p>
-                    {games[1].release_date}
-                  </p>
-                </S.GameMetric>
-
-                { games[1].website &&
-                  <S.GameMetric>
-                    <h3>Website</h3>
-                    <a href={games[1].website} target="_blank" rel="noreferrer">Access Website</a>
-                  </S.GameMetric>
-                }
-
-                <S.GameText>
-                  <h3>Short Description</h3>
-                  <p>{games[1].short_description}</p>
-                </S.GameText>
-
-                <S.GameText>
-                  <h3>Detailed Description</h3>
-                  <p>{games[1].detailed_description}</p>
-                </S.GameText>
-
-                <S.GameText>
-                  <h3>About</h3>
-                  <p>{games[1].about}</p>
-                </S.GameText>
-              </>
-            }
           </Col>
         </Row>
       </Container>
