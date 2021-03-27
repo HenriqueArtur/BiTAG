@@ -91,3 +91,125 @@ export const BackButton = styled(ButtonPrimary)`
     text-decoration: underline !important;
   }
 `;
+
+export const MetricCard = styled.div`
+  background-color: #69f052;
+  display: flex;
+  margin-bottom: 3rem;
+  position: relative;
+
+  > div {
+    background-color: #b8e1f4;
+    color: var(--color-gray);
+    height: 100%;
+    margin-left: -.4rem;
+    margin-top: -.4rem;
+    padding: .5rem 2rem 2.5rem;
+    text-align: right;
+    width: 100%;
+
+    > div {
+      align-items: center;
+      background-color: #69f052;
+      display: flex;
+      height: 4rem;
+      justify-content: center;
+      left: 5%;
+      position: absolute;
+      top: -20%;
+      width: 4rem;
+
+      > svg {
+        color: var(--color-white);
+        font-size: 1.8rem;
+      }
+    }
+
+    > h3 {
+      font-size: 1rem;
+      font-weight: 300;
+      margin: 0 0 .2rem;
+    }
+
+    > span {
+      font-size: 1.5rem;
+      font-weight: 700;
+    }
+  }
+
+  @media screen and (max-width: 768px) {
+    flex-basis: 60%;
+  }
+
+  @media screen and (min-width: 768px) {
+    flex-basis: 40%;
+  }
+
+  @media screen and (min-width: 1024px) {
+    flex-basis: 35%;
+  }
+`;
+
+export const MetricWrapper = styled.div`
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-around;
+  margin-top: .5rem;
+  width: 100%;
+
+  ${MetricCard} {
+    &:nth-child(2) {
+      background-color: #51f08e;
+
+      > div {
+        > div {
+          background-color: #51f08e;
+        }
+      }
+    }
+
+    &:nth-child(3) {
+      background-color: #e8b731;
+
+      > div {
+        > div {
+          background-color: #e8b731;
+        }
+      }
+    }
+
+    &:nth-child(4) {
+      background-color: #35d9e8;
+
+      > div {
+        > div {
+          background-color: #35d9e8;
+        }
+      }
+    }
+
+    &:nth-child(5) {
+      background-color: #6666ff;
+
+      > div {
+        > div {
+          background-color: #6666ff;
+        }
+      }
+    }
+
+    &:nth-child(6) {
+      background-color: #f96675;
+
+      > div {
+        > div {
+          background-color: #f96675;
+        }
+      }
+    }
+  }
+
+  @media screen and (min-width: 1024px) {
+    max-width: 80%;
+  }
+`;
