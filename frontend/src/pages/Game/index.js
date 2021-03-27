@@ -24,7 +24,7 @@ const Games = () => {
   // const [discount, setDiscount] = useState([]);
 
   useEffect(() => {
-    api.get(`/api/games/findByName?names=${game_name}`)
+    api.get(`/games/findByName?names=${game_name}`)
     .then(response => {
       setGame(response.data);
     }).catch(err => {

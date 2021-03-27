@@ -19,7 +19,7 @@ const Games = () => {
   const search = history.location.search;
 
   useEffect(() => {
-    api.get(`/api/games/findByName${search}`).then(response => {
+    api.get(`/games/findByName${search}`).then(response => {
       setGames(response.data);
     });
   }, [search]);

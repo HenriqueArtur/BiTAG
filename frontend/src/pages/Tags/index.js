@@ -6,7 +6,6 @@ import { FiCheck } from 'react-icons/fi';
 import { ButtonPrimary } from '../../components/CustomButton';
 
 import Filter from '../../components/Filter';
-import Sorter from '../../components/Sorter';
 
 import SearchBar from '../../components/SearchBar';
 
@@ -26,6 +25,8 @@ const Tags = () => {
 
   const [loading, setLoading] = useState(false);
 
+  const [sorter, setSorter] = useState('');
+
   const fetchTags = async () => {
     try {
       await api.get('/tags')
@@ -41,6 +42,16 @@ const Tags = () => {
   useEffect(() => {
     fetchTags();
   }, [searchTerm]);
+
+  useEffect(() => {
+    async function sorterTags() {
+      const response = await api.get(`/tags?order=${sorter}`);
+
+      setTags(response.data);
+    }
+
+    sorterTags();
+  }, [sorter]);
 
   const handleSelectTag = (tag) => {
     selectedTags.includes(tag.name)
@@ -68,9 +79,20 @@ const Tags = () => {
       <Container className="d-flex flex-column">
         <Row className="align-items-center flex-100 justify-content-between mb-4">
           <Col sm="12" md="4" className="mb-3 mb-md-0">
-            <Filter />
-
-            <Sorter />
+            <Filter
+              name="sorter"
+              label="Ordenar por:"
+              value={sorter}
+              onChange={e => setSorter(e.target.value)}
+              options={[
+                {value: 'AZ-ASC', label: 'Alfabética - crescente'},
+                {value: 'AZ-DESC', label: 'Alfabética - decrescente'},
+                {value: 'games_count-ASC', label: 'Quantidade de jogos - crescente'},
+                {value: 'games_count-DESC', label: 'Quantidade de jogos - decrescente'},
+                {value: 'revenue-ASC', label: 'Revenue - crescente'},
+                {value: 'revenue-DESC', label: 'Revenue - decrescente'}
+              ]}
+            />
           </Col>
 
           <Col sm="12" md="4" className="mb-3 mb-md-0 text-center">

@@ -22,7 +22,7 @@ const Home = () => {
 
   const fetchGames = async () => {
     try {
-      await api.get(`/api/games`)
+      await api.get(`/games`)
       .then(response => {
         setGames(response.data);
       });

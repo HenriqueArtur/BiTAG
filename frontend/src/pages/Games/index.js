@@ -8,7 +8,6 @@ import { ButtonPrimary } from '../../components/CustomButton';
 import { useHistory } from 'react-router-dom';
 
 import Filter from '../../components/Filter';
-import Sorter from '../../components/Sorter';
 
 import SearchBar from '../../components/SearchBar';
 
@@ -24,9 +23,12 @@ const Games = () => {
 
   const [loading, setLoading] = useState(false);
 
+  const [filter, setFilter] = useState('');
+  const [sorter, setSorter] = useState('');
+
   const fetchGames = async () => {
     try {
-      await api.get(`/api/games`)
+      await api.get(`/games`)
       .then(response => {
         setGames(response.data);
       });
@@ -61,14 +63,60 @@ const Games = () => {
     );
   }
 
+  useEffect(() => {
+    async function filterGames() {
+      const response = await api.get(`/games?order=${filter}`);
+
+      setGames(response.data);
+    }
+
+    filterGames();
+  }, [filter]);
+
+  useEffect(() => {
+    async function sorterGames() {
+      const response = await api.get(`/games?order=${sorter}`);
+
+      setGames(response.data);
+    }
+
+    sorterGames();
+  }, [sorter]);
+
   return (
     <div id="page-games">
       <Container className="d-flex flex-column">
         <Row className="align-items-center flex-100 justify-content-between mb-4">
           <Col sm="12" md="4" className="mb-3 mb-md-0">
-            <Filter />
+            <Filter
+              name="filter"
+              label="Filtrar por:"
+              value={filter}
+              onChange={e => setFilter(e.target.value)}
+              options={[
+                {value: 'price-ASC', label: 'Preço - ascendente'},
+                {value: 'price-DESC', label: 'Preço - decrescente'},
+                {value: 'positive_reviews-ASC', label: 'Reviews positivas - ascendente'},
+                {value: 'positive_reviews-DESC', label: 'Reviews positivas - decrescente'},
+                {value: 'negative_reviews-ASC', label: 'Reviews negativas - ascendente'},
+                {value: 'negative_reviews-DESC', label: 'Reviews negativas - decrescente'},
+                {value: 'owners-ASC', label: 'Owners - ascendente'},
+                {value: 'owners-DESC', label: 'Owners - decrescente'}
+              ]}
+            />
 
-            <Sorter />
+            <Filter
+              name="sorter"
+              label="Ordenar por:"
+              value={sorter}
+              onChange={e => setSorter(e.target.value)}
+              options={[
+                {value: 'AZ-ASC', label: 'Alfabética - ascendente'},
+                {value: 'AZ-DESC', label: 'Alfabética - decrescente'},
+                {value: 'revenue-ASC', label: 'Revenue - ascendente'},
+                {value: 'revenue-DESC', label: 'Revenue - decrescente'}
+              ]}
+            />
           </Col>
 
           <Col sm="12" md="4" className="mb-3 mb-md-0 text-center">
