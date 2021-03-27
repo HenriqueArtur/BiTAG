@@ -55,24 +55,10 @@ const Header = (props) => {
                 <S.NavLink to="/games">Jogos</S.NavLink>
               </S.NavbarDropdown>
               <S.NavLink to="/tags">
-                Recente
-              </S.NavLink>
-              <S.NavLink to="/tags">
                 Sobre
               </S.NavLink>
             </Nav>
           </Navbar.Collapse>
-
-          <S.UserButton variant="primary" onClick={() => setModalShow(true)}>
-            {
-              logged ?
-                <img src={woman} alt="Woman profile" />
-              :
-                <img src={user} alt="User profile" />
-            }
-          </S.UserButton>
-
-          <Modal isLoggedIn={logged} />
         </S.NavContainer>
       </S.NavbarHeader>
     </>

@@ -175,4 +175,8 @@ export const Background = styled.div`
       }
     }
   }
+
+  @media(max-width: 768px) {
+    margin-top: -7.5rem;
+  }
 `;
