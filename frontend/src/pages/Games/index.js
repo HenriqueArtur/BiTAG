@@ -14,6 +14,7 @@ import SearchBar from '../../components/SearchBar';
 import * as S from './styles';
 
 import api from '../../services/api';
+import CustomPagination from '../../components/Pagination';
 
 const Games = () => {
   const [games, setGames] = useState([]);
@@ -26,21 +27,25 @@ const Games = () => {
   const [filter, setFilter] = useState('');
   const [sorter, setSorter] = useState('');
 
-  const fetchGames = async () => {
-    try {
-      await api.get(`/games`)
-      .then(response => {
-        setGames(response.data);
-      });
-      setLoading(true);
-    } catch (err) {
-      console.log(err);
-    }
-  }
+  const [page, setPage] = useState(0);
 
   useEffect(() => {
+    const fetchGames = async () => {
+      try {
+        await api.get('/games', {
+          params: { page }
+        })
+        .then(response => {
+          setGames(response.data);
+        });
+        setLoading(true);
+      } catch (err) {
+        console.log(err);
+      }
+    }
+
     fetchGames();
-  }, [searchTerm]);
+  }, [searchTerm, page]);
 
   const handleSelectGames = (game) => {
     selectedGames.includes(game.name)
@@ -121,7 +126,7 @@ const Games = () => {
 
           <Col sm="12" md="4" className="mb-3 mb-md-0 text-center">
             {
-              selectedGames.length >= 1 &&
+              selectedGames.length >= 2 &&
               <ButtonPrimary onClick={() => handleSubmitGames()} className="px-5 py-3" type="button" uppercase>
                 Analisar
               </ButtonPrimary>
@@ -184,6 +189,10 @@ const Games = () => {
                   </S.GameCard>
                 </Col>
               ))}
+
+              <Col md="12" className="d-flex justify-content-center">
+                <CustomPagination />
+              </Col>
             </Row>
           ) : (
             <Row className="flex-100 justify-content-center">

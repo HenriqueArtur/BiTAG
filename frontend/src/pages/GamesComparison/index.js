@@ -7,8 +7,9 @@ import { FiChevronLeft } from 'react-icons/fi';
 import * as S from './styles';
 import GameCard from '../../components/GameCard';
 
-// import ChartBar from '../../components/ChartBar';
-// import axios from 'axios';
+import ChartBar from '../../components/ChartBar';
+import ChartHorizontalBar from '../../components/ChartHorizontalBar';
+import ChartPolarArea from '../../components/ChartPolarArea';
 
 import api from '../../services/api';
 
@@ -18,15 +19,22 @@ const Games = () => {
 
   const search = history.location.search;
 
+  const [label, setLabel] = useState([]);
+  const [price, setPrice] = useState([]);
+  const [initialPrice, setInitialPrice] = useState([]);
+  const [revenue, setRevenue] = useState([]);
+  const [owners, setOwners] = useState([]);
+
   useEffect(() => {
     api.get(`/games/findByName${search}`).then(response => {
       setGames(response.data);
+      setLabel(Object.keys(response.data).map(key => response.data[key].name));
+      setPrice(Object.keys(response.data).map(key => response.data[key].price));
+      setInitialPrice(Object.keys(response.data).map(key => response.data[key].inital_price));
+      setRevenue(Object.keys(response.data).map(key => response.data[key].revenue));
+      setOwners(Object.keys(response.data).map(key => response.data[key].owners));
     });
   }, [search]);
-
-  // const [label, setLabel] = useState([]);
-  // const [price, setPrice] = useState([]);
-  // const [discount, setDiscount] = useState([]);
 
   // useEffect(() => {
   //   axios.get("./steam.json")
@@ -95,67 +103,107 @@ const Games = () => {
             ))}
           </Col>
 
-          <Col md="6" lg="6" className="mb-5 mb-md-0">
-            <Row>
+          <Col md="9" lg="9" className="mb-5 mb-md-0">
+            <S.GraphicTitle>
+              Revenue Comparison
+            </S.GraphicTitle>
+            <Row className="mb-5">
               <Col>
-                {/* <ChartBar
+                <ChartBar
                   data={{
                     labels: label,
                     datasets: [
                       {
-                        type: "line",
-                        label: "Releases price",
-                        borderColor: "rgba(255,99,132,0.8)",
-                        borderWidth: 1,
-                        hoverBorderColor: "rgba(255,99,132,1)",
-                        fill: false,
-                        data: price
-                      },
-                      {
                         type: "bar",
-                        label: "Releases discount",
-                        backgroundColor: "rgba(111, 227, 255, 0.2)",
+                        label: "Revenue",
+                        barPercentage: 0.1,
+                        backgroundColor: "rgba(111, 227, 255, 0.5)",
                         borderColor: "rgba(111, 227, 255, 1)",
                         borderWidth: 1,
-                        hoverBackgroundColor: "rgba(111, 227, 255, 0.4)",
+                        hoverBackgroundColor: "rgba(111, 227, 255, 0.7)",
                         hoverBorderColor: "rgba(111, 227, 255, 1)",
-                        data: discount
+                        fill: false,
+                        data: revenue
                       }
                     ],
                   }}
-                /> */}
+                />
               </Col>
             </Row>
-            <Row className="mt-5">
-              {/* <Col>
-                <Row>
-                  <Col>
-                    <S.InfoHeading>
-                      <h3>Page View vs Onload</h3>
-                    </S.InfoHeading>
-                  </Col>
-                </Row>
-                <Row>
-                  <Col className="d-flex justify-content-around">
-                    <S.GameData>
-                      <h3>Page Load (LUX)</h3>
-                      <p>0.7s</p>
-                    </S.GameData>
 
-                    <S.GameData>
-                      <h3>Page Views (LUX)</h3>
-                      <p>2.7 Mpvs</p>
-                    </S.GameData>
-
-                    <S.GameData>
-                      <h3>Bounce Rate (LUX)</h3>
-                      <p>40.6%</p>
-                    </S.GameData>
-                  </Col>
-                </Row>
-              </Col> */}
+            <S.GraphicTitle>
+              Owners Comparison
+            </S.GraphicTitle>
+            <Row className="mb-5">
+              <Col>
+                <ChartPolarArea
+                  data={{
+                    labels: label,
+                    datasets: [
+                      {
+                        label: "Owners",
+                        backgroundColor: "rgba(89, 89, 224, 0.4)",
+                        borderColor: "rgba(89, 89, 224, 1)",
+                        borderWidth: 1,
+                        hoverBackgroundColor: "rgba(89, 89, 224, 0.6)",
+                        hoverBorderColor: "rgba(89, 89, 224, 1)",
+                        data: owners
+                      }
+                    ],
+                  }}
+                />
+              </Col>
             </Row>
 
+            <S.GraphicTitle>
+              Price Comparison
+            </S.GraphicTitle>
+            <Row className="mb-5">
+              <Col>
+                <ChartHorizontalBar
+                  data={{
+                    labels: label,
+                    datasets: [
+                      {
+                        label: "Price",
+                        barPercentage: 0.2,
+                        backgroundColor: "rgba(195, 69, 133, 0.6)",
+                        borderColor: "rgba(195, 69, 133, 1)",
+                        borderWidth: 1,
+                        hoverBackgroundColor: "rgba(195, 69, 133, 0.8)",
+                        hoverBorderColor: "rgba(195, 69, 133, 1)",
+                        data: price
+                      }
+                    ],
+                  }}
+                />
+              </Col>
+            </Row>
+
+            <S.GraphicTitle>
+              Initial Price Comparison
+            </S.GraphicTitle>
+            <Row>
+              <Col>
+                <ChartHorizontalBar
+                  data={{
+                    labels: label,
+                    datasets: [
+                      {
+                        label: "Initial Price",
+                        barPercentage: 0.2,
+                        backgroundColor: "rgba(59, 218, 109, 0.4)",
+                        borderColor: "rgba(59, 218, 109, 1)",
+                        borderWidth: 1,
+                        hoverBackgroundColor: "rgba(59, 218, 109, 0.6)",
+                        hoverBorderColor: "rgba(59, 218, 109, 1)",
+                        data: initialPrice
+                      }
+                    ],
+                  }}
+                />
+              </Col>
+            </Row>
           </Col>
         </Row>
       </Container>
