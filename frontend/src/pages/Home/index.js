@@ -8,6 +8,7 @@ import { ButtonPrimary } from '../../components/CustomButton';
 import { useHistory } from 'react-router-dom';
 
 import backgroundHome from '../../assets/background-home.png';
+import logo from '../../assets/logo.png';
 
 import * as S from './styles';
 
@@ -60,8 +61,9 @@ const Home = () => {
         <img src={backgroundHome} alt="BiTAG Home Background" />
 
         <div>
-          <h1>BiTAG</h1>
-          <p>Escolha tags e jogos e faça análises comparativas. Tudo na mesma aplicação.</p>
+          <img src={logo} alt="BiTAG logo" />
+          <h1>Plataforma de comparação de dados</h1>
+          <p>Otimização do tempo de pesquisa por meio da comparação de Tags para a tomada de decisão de estúdios e desenvolvedores indies.</p>
 
           <a href="#tags"><FiChevronDown /></a>
         </div>

@@ -116,7 +116,7 @@ export const ListTitle = styled.h1`
 `;
 
 export const Background = styled.div`
-  margin-bottom: 4rem;
+  margin-bottom: 5rem;
   margin-top: -13.5rem;
   position: relative;
 
@@ -126,6 +126,10 @@ export const Background = styled.div`
     margin: 0 auto;
     max-width: 1920px;
     width: 100%;
+
+    @media screen and (max-width: 768px) {
+      object-fit: cover;
+    }
   }
 
   > div {
@@ -138,20 +142,29 @@ export const Background = styled.div`
     top: 50%;
     transform: translate(-50%, -50%);
 
+    > img {
+      margin: 0 0 2.5rem;
+      max-width: 280px;
+    }
+
     > h1 {
-      border-bottom: 1px solid rgba(255, 255, 255, 0.5);
-      font-size: 4rem;
+      font-size: 2rem;
       font-weight: 400;
       line-height: 1;
       letter-spacing: 0.1em;
       margin-bottom: 1rem;
-      padding-bottom: 1rem;
       text-align: center;
-      width: 90%;
+      width: 100%;
+
+      @media screen and (min-width: 1024px) {
+        white-space: nowrap;
+      }
     }
 
     > p {
-      font-size: 0.9rem;
+      font-size: 1.2rem;
+      font-weight: 300;
+      letter-spacing: -0.05em;
       margin: 0;
       text-align: center;
     }
