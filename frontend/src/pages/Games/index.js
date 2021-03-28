@@ -41,7 +41,7 @@ const Games = () => {
         })
         .then(response => {
           setGames(response.data);
-          setTotal(response.headers['All-Games']);
+          setTotal(response.headers['all-games']);
         });
         setLoading(true);
       } catch (err) {
@@ -200,7 +200,7 @@ const Games = () => {
               ))}
 
               <Col md="12" className="d-flex justify-content-center">
-                <CustomPagination limit={LIMIT} total={2391} page={page} setPage={setPage} />
+                <CustomPagination limit={LIMIT} total={total} page={page} setPage={setPage} />
               </Col>
             </Row>
           ) : (

@@ -9,7 +9,9 @@ const Home = require("./app/controllers/home.controller");
 
 const app = express();
 
-app.use(cors());
+app.use(cors({
+  exposedHeaders: ['All-Games', 'Games-Found', 'Page']
+}));
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 
