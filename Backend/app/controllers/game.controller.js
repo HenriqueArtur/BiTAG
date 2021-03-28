@@ -1,5 +1,6 @@
 const { Game, Tag } = require("../models");
 const { Op } = require("sequelize");
+const Sequelize = require("sequelize");
 
 exports.findAll = (req, res) => {
   let order = req.query.order;
@@ -75,12 +76,14 @@ exports.findAll = (req, res) => {
 
   Game.findAll(query)
     .then((data) => {
-      console.log(data.length);
-      console.log((page == null ? 0 : page) * 100);
+      res.setHeader("All-Games", 2391);
+      res.setHeader("Games-Found", data.length);
+      res.setHeader("Page", (page == null ? 1 : parseInt(page)) );
       res.send(data);
     })
     .catch((err) => {
       res.status(500).send({
+        status: 500,
         message: err.message,
       });
     });
@@ -93,6 +96,7 @@ exports.findByName = (req, res) => {
       message: "Bad Request!",
     });
   }
+
   let games = req.query.names.split(",");
   let order = req.query.order;
 
@@ -172,11 +176,15 @@ exports.findByName = (req, res) => {
           status: 404,
           message: "Not Found",
         });
-      else res.send(data);
+      else {
+        res.setHeader("Games-Found", data.length);
+        res.send(data);
+      }
     })
     .catch((err) => {
       console.log(err);
       res.status(500).send({
+        status: 500,
         message: "Params not valid!",
       });
     });
@@ -269,19 +277,23 @@ exports.findByAppId = (req, res) => {
           status: 404,
           message: "Not Found",
         });
-      else res.send(data);
+      else {
+        res.setHeader("Games-Found", data.length);
+        res.send(data);
+      }
     })
     .catch((err) => {
       console.log(err);
 
       res.status(500).send({
+        status: 500,
         message: "Params not valid!",
       });
     });
 };
 
 exports.findByTags = (req, res) => {
-  if (Object.keys(req.query).length === 0) {
+  if (Object.keys(req.query).length === 0 || !("tags" in req.query)) {
     res.status(400).send({
       status: 400,
       message: "Bad Request!",
@@ -296,9 +308,12 @@ exports.findByTags = (req, res) => {
       {
         model: Tag,
         as: "tag",
-        where: { name: tags },
         attributes: ["id", "name"],
-        through: {},
+        through: {
+          where: {
+            id_tag: Sequelize.where(Sequelize.fn())
+          }
+        }
       },
     ],
   };
@@ -365,11 +380,15 @@ exports.findByTags = (req, res) => {
           status: 404,
           message: "Not Found",
         });
-      else res.send(data);
+      else {
+        res.setHeader("Games-Found", data.length);
+        res.send(data);
+      }
     })
     .catch((err) => {
       console.log(err);
       res.status(500).send({
+        status: 500,
         message: "Params not valid!",
       });
     });
@@ -522,11 +541,15 @@ exports.findByParams = (req, res) => {
           status: 404,
           message: "Not Found",
         });
-      else res.send(data);
+      else {
+        res.setHeader("Games-Found", data.length);
+        res.send(data);
+      }
     })
     .catch((err) => {
       console.log(err);
       res.status(500).send({
+        status: 500,
         message: "Params not valid!",
       });
     });
