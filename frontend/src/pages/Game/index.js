@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 
 import { Col, Container, Row } from 'react-bootstrap';
-import { FiChevronLeft, FiDollarSign, FiSquare, FiThumbsDown, FiThumbsUp, FiTriangle, FiUser } from 'react-icons/fi';
+import { FiChevronLeft, FiDollarSign, FiThumbsDown, FiThumbsUp, FiTriangle, FiUser } from 'react-icons/fi';
 
 import { Link, useParams } from 'react-router-dom';
 

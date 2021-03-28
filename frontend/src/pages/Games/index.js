@@ -16,6 +16,8 @@ import * as S from './styles';
 import api from '../../services/api';
 import CustomPagination from '../../components/Pagination';
 
+const LIMIT = 1;
+
 const Games = () => {
   const [games, setGames] = useState([]);
   const history = useHistory();
@@ -28,6 +30,8 @@ const Games = () => {
   const [sorter, setSorter] = useState('');
 
   const [page, setPage] = useState(0);
+  const [total, setTotal] = useState(0);
+  const [offset, setOffset] = useState(0);
 
   useEffect(() => {
     const fetchGames = async () => {
@@ -37,6 +41,7 @@ const Games = () => {
         })
         .then(response => {
           setGames(response.data);
+          setTotal(response.headers['All-Games']);
         });
         setLoading(true);
       } catch (err) {
@@ -61,11 +66,15 @@ const Games = () => {
   }
 
   const handleSearchGames = () => {
-    setGames(
-      games.filter((game) =>
-        game.name.toLowerCase().includes(searchTerm.toLowerCase())
+    api.get(`/games/findByName?names=${searchTerm}`)
+    .then(response => {
+      let result = response.data.filter((item) =>
+        item.name.toLowerCase().includes(searchTerm.toLowerCase())
       )
-    );
+      setGames(result);
+    }).catch(err => {
+      console.log(err);
+    });
   }
 
   useEffect(() => {
@@ -191,7 +200,7 @@ const Games = () => {
               ))}
 
               <Col md="12" className="d-flex justify-content-center">
-                <CustomPagination />
+                <CustomPagination limit={LIMIT} total={2391} page={page} setPage={setPage} />
               </Col>
             </Row>
           ) : (
