@@ -1,6 +1,6 @@
 const { Game, Tag } = require("../models");
 const { Op } = require("sequelize");
-const Sequelize = require("sequelize");
+var db = require("../models/index.js");
 
 exports.findAll = (req, res) => {
   let order = req.query.order;
@@ -292,7 +292,7 @@ exports.findByAppId = (req, res) => {
     });
 };
 
-exports.findByTags = (req, res) => {
+exports.findByTags = async (req, res) => {
   if (Object.keys(req.query).length === 0 || !("tags" in req.query)) {
     res.status(400).send({
       status: 400,
@@ -309,11 +309,10 @@ exports.findByTags = (req, res) => {
         model: Tag,
         as: "tag",
         attributes: ["id", "name"],
-        through: {
-          where: {
-            id_tag: Sequelize.where(Sequelize.fn())
-          }
+        where: {
+          name: { [Op.or]: tags }
         }
+        // where: { name: tags },
       },
     ],
   };
@@ -372,6 +371,8 @@ exports.findByTags = (req, res) => {
         break;
     }
   }
+
+  // console.log(await search_games_by_tags(tags));
 
   Game.findAll(query)
     .then((data) => {
@@ -554,3 +555,99 @@ exports.findByParams = (req, res) => {
       });
     });
 };
+
+
+
+// async function search_games_by_tags(search_tags = []){
+//   // console.log(search_tags);
+//   search_tags = search_tags
+//     .filter(s => typeof s === 'string')
+//     .map(s => s.replace(/'/g, ''));
+//   let results = await db.sequelize.query(`
+//     SELECT
+//       g.id                   AS game_id,
+//       g.name                 AS game_name,
+//       g.price                AS game_price,
+//       g.inital_price         AS game_inital_price,
+//       g.revenue              AS game_revenue,
+//       g.positive_reviews     AS game_positive_reviews,
+//       g.negative_reviews     AS game_negative_reviews,
+//       g.owners               AS game_owners,
+//       g.release_date         AS game_release_date,
+//       g.website              AS game_website,
+//       g.developer_name       AS game_developer_name,
+//       g.publisher_name       AS game_publisher_name,
+//       g.header_image         AS game_header_image,
+//       g.about                AS game_about,
+//       g.short_description    AS game_short_description,
+//       g.detailed_description AS game_detailed_description,
+
+//       t.id                AS tag_id,
+//       t.name              AS tag_name,
+//       t.games_count       AS tag_games_count,
+//       t.revenue_0k_5k     AS tag_revenue_0k_5k,
+//       t.revenue_5k_25k    AS tag_revenue_5k_25k,
+//       t.revenue_25k_100k  AS tag_revenue_25k_100k,
+//       t.revenue_100k_200k AS tag_revenue_100k_200k,
+//       t.revenue_200k_500k AS tag_revenue_200k_500k,
+//       t.revenue_500k_1M   AS tag_revenue_500k_1M,
+//       t.revenue_1M_5M     AS tag_revenue_1M_5M,
+//       t.revenue_5M        AS tag_revenue_5M
+
+//     FROM games AS g
+//     JOIN gametags AS gt
+//     ON g.id = gt.id_game
+//     LEFT JOIN tags AS t
+//     ON t.id = gt.id_tag
+//     ${search_tags.length > 0
+//       ? `WHERE (${await search_tags.map(s => `t.name LIKE '%${s}%'`).join(' OR ')})`
+//       : ''
+//     }
+//     WHERE t.name LIKE '%${search_tags}%
+//     ORDER BY g.id'
+//   `, { type: db.sequelize.QueryTypes.SELECT })
+
+//   let games = [], this_game = {}
+//   for(let line of results){
+//     if(this_game.id !== line.game_id){
+//       if(this_game.id){
+//         games.push({ ...this_game })
+//       }
+//       this_game = {
+//         id:                   line.game_id,
+//         name:                 line.game_name,
+//         price:                line.game_price,
+//         inital_price:         line.game_inital_price,
+//         revenue:              line.game_revenue,
+//         positive_reviews:     line.game_positive_reviews,
+//         negative_reviews:     line.game_negative_reviews,
+//         owners:               line.game_owners,
+//         release_date:         line.game_release_date,
+//         website:              line.game_website,
+//         developer_name:       line.game_developer_name,
+//         publisher_name:       line.game_publisher_name,
+//         header_image:         line.game_header_image,
+//         about:                line.game_about,
+//         short_description:    line.game_short_description,
+//         detailed_description: line.game_detailed_description,
+//         tags: []
+//       }
+//     }else{
+//       this_game.tags.push({
+//         id:                line.tag_id,
+//         name:              line.tag_name,
+//         games_count:       line.tag_games_count,
+//         revenue_0k_5k:     line.tag_revenue_0k_5k,
+//         revenue_5k_25k:    line.tag_revenue_5k_25k,
+//         revenue_25k_100k:  line.tag_revenue_25k_100k,
+//         revenue_100k_200k: line.tag_revenue_100k_200k,
+//         revenue_200k_500k: line.tag_revenue_200k_500k,
+//         revenue_500k_1M:   line.tag_revenue_500k_1M,
+//         revenue_1M_5M:     line.tag_revenue_1M_5M,
+//         revenue_5M:        line.tag_revenue_5M,
+//       })
+//     }
+//   }
+
+//   return games
+// }

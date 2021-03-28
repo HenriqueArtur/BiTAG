@@ -35,12 +35,12 @@ exports.findAll = (req, res) => {
             as: "game",
             attributes: ["revenue"],
             required: false,
-            right: false,
           },
         ];
         query.attributes = [
           [sequelize.fn("SUM", sequelize.col("Game.revenue")), "revenue"],
           "id",
+          "name",
           "games_count",
           "revenue_0k_5k",
           "revenue_5k_25k",
@@ -52,16 +52,6 @@ exports.findAll = (req, res) => {
           "revenue_5M",
         ];
         query.order = [[sequelize.literal("revenue"), "ASC"]];
-
-        Tag.findAll(query)
-          .then((data) => {
-            res.send(data);
-          })
-          .catch((err) => {
-            res.status(500).send({
-              message: err.message,
-            });
-          });
         break;
 
       case "revenue-DESC":
@@ -72,12 +62,12 @@ exports.findAll = (req, res) => {
             as: "game",
             attributes: ["revenue"],
             required: false,
-            right: false,
           },
         ];
         query.attributes = [
           [sequelize.fn("SUM", sequelize.col("Game.revenue")), "revenue"],
           "id",
+          "name",
           "games_count",
           "revenue_0k_5k",
           "revenue_5k_25k",
@@ -89,16 +79,6 @@ exports.findAll = (req, res) => {
           "revenue_5M",
         ];
         query.order = [[sequelize.literal("revenue"), "DESC"]];
-
-        Tag.findAll(query)
-          .then((data) => {
-            res.send(data);
-          })
-          .catch((err) => {
-            res.status(500).send({
-              message: err.message,
-            });
-          });
         break;
 
       default:
@@ -160,12 +140,12 @@ exports.findByName = (req, res) => {
             as: "game",
             attributes: ["revenue"],
             required: false,
-            right: false,
           },
         ];
         query.attributes = [
           [sequelize.fn("SUM", sequelize.col("Game.revenue")), "revenue"],
           "id",
+          "name",
           "games_count",
           "revenue_0k_5k",
           "revenue_5k_25k",
@@ -177,16 +157,6 @@ exports.findByName = (req, res) => {
           "revenue_5M",
         ];
         query.order = [[sequelize.literal("revenue"), "ASC"]];
-
-        Tag.findAll(query)
-          .then((data) => {
-            res.send(data);
-          })
-          .catch((err) => {
-            res.status(500).send({
-              message: err.message,
-            });
-          });
         break;
 
       case "revenue-DESC":
@@ -197,12 +167,12 @@ exports.findByName = (req, res) => {
             as: "game",
             attributes: ["revenue"],
             required: false,
-            right: false,
           },
         ];
         query.attributes = [
           [sequelize.fn("SUM", sequelize.col("Game.revenue")), "revenue"],
           "id",
+          "name",
           "games_count",
           "revenue_0k_5k",
           "revenue_5k_25k",
@@ -214,16 +184,6 @@ exports.findByName = (req, res) => {
           "revenue_5M",
         ];
         query.order = [[sequelize.literal("revenue"), "DESC"]];
-
-        Tag.findAll(query)
-          .then((data) => {
-            res.send(data);
-          })
-          .catch((err) => {
-            res.status(500).send({
-              message: err.message,
-            });
-          });
         break;
 
       default:
@@ -312,12 +272,12 @@ exports.findByOptions = (req, res) => {
             as: "game",
             attributes: ["revenue"],
             required: false,
-            right: false,
           },
         ];
         query.attributes = [
           [sequelize.fn("SUM", sequelize.col("Game.revenue")), "revenue"],
           "id",
+          "name",
           "games_count",
           "revenue_0k_5k",
           "revenue_5k_25k",
@@ -329,16 +289,6 @@ exports.findByOptions = (req, res) => {
           "revenue_5M",
         ];
         query.order = [[sequelize.literal("revenue"), "ASC"]];
-
-        Tag.findAll(query)
-          .then((data) => {
-            res.send(data);
-          })
-          .catch((err) => {
-            res.status(500).send({
-              message: err.message,
-            });
-          });
         break;
 
       case "revenue-DESC":
@@ -349,12 +299,12 @@ exports.findByOptions = (req, res) => {
             as: "game",
             attributes: ["revenue"],
             required: false,
-            right: false,
           },
         ];
         query.attributes = [
           [sequelize.fn("SUM", sequelize.col("Game.revenue")), "revenue"],
           "id",
+          "name",
           "games_count",
           "revenue_0k_5k",
           "revenue_5k_25k",
@@ -366,16 +316,6 @@ exports.findByOptions = (req, res) => {
           "revenue_5M",
         ];
         query.order = [[sequelize.literal("revenue"), "DESC"]];
-
-        Tag.findAll(query)
-          .then((data) => {
-            res.send(data);
-          })
-          .catch((err) => {
-            res.status(500).send({
-              message: err.message,
-            });
-          });
         break;
 
       default:

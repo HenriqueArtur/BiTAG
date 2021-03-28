@@ -5,6 +5,7 @@ const bodyParser = require("body-parser");
 
 const Tag = require("./app/controllers/tag.controller");
 const Game = require("./app/controllers/game.controller");
+const Home = require("./app/controllers/home.controller");
 
 const app = express();
 
@@ -25,6 +26,8 @@ app.get("/api/games/findByName", Game.findByName);
 app.get("/api/games/findByAppId", Game.findByAppId);
 app.get("/api/games/findByTags", Game.findByTags);
 app.get("/api/games/findByParams", Game.findByParams);
+
+app.get("/api/home", Home.getInfos);
 
 app.listen(process.env.PORT || 3000, () => {
   console.log(`Listening on port: ${process.env.PORT}`);
