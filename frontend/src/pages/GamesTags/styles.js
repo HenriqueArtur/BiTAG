@@ -106,3 +106,9 @@ export const GameSelected = styled.div`
     text-transform: uppercase;
   }
 `;
+
+export const GameCounter = styled.p`
+  font-size: .8rem;
+  font-weight: 500;
+  margin: .4rem 0 0;
+`;

@@ -9,7 +9,6 @@ import { ButtonPrimary } from '../../components/CustomButton';
 
 
 import Filter from '../../components/Filter';
-import Sorter from '../../components/Sorter';
 
 import SearchBar from '../../components/SearchBar';
 
@@ -27,10 +26,13 @@ const GamesTags = () => {
 
   const [loading, setLoading] = useState(false);
 
+  const [filter, setFilter] = useState('');
+  const [sorter, setSorter] = useState('');
+
   useEffect(() => {
     const fetchGamesTags = async () => {
       try {
-        await api.get(`/api/games/findByTags?tags=${tag_name}`)
+        await api.get(`/games/findByTags?tags=${tag_name}`)
         .then(response => {
           setGamesTags(response.data);
         });
@@ -43,22 +45,17 @@ const GamesTags = () => {
     fetchGamesTags();
   }, [tag_name, searchTerm]);
 
-  useEffect(() => {
-    const handleSubmitGames = () => {
-      selectedGames.length >= 2 &&
-      history.push({
-        pathname: "/gamescomparison/findByName",
-        search: `?names=${selectedGames.join(",")}`
-      });
-    }
-
-    handleSubmitGames();
-  }, [selectedGames, history]);
-
   const handleSelectGames = (game) => {
     selectedGames.includes(game.name)
       ? setSelectedGames(selectedGames.filter(x => x !== game.name))
       : setSelectedGames([...selectedGames, game.name]);
+  }
+
+  const handleSubmitGames = () => {
+    history.push({
+      pathname: "/gamescomparison/findByName",
+      search: `?names=${selectedGames.join(",")}`
+    });
   }
 
   const handleSearchGames = () => {
@@ -68,14 +65,72 @@ const GamesTags = () => {
       )
     );
   }
+
+  useEffect(() => {
+    async function filterGames() {
+      const response = await api.get(`/games?order=${filter}`);
+
+      setGamesTags(response.data);
+    }
+
+    filterGames();
+  }, [filter]);
+
+  useEffect(() => {
+    async function sorterGames() {
+      const response = await api.get(`/games?order=${sorter}`);
+
+      setGamesTags(response.data);
+    }
+
+    sorterGames();
+  }, [sorter]);
+
   return (
     <div id="page-gamestags">
       <Container className="d-flex flex-column">
         <Row className="align-items-center flex-100 justify-content-between mb-4">
           <Col sm="12" md="4" className="mb-3 mb-md-0">
-            <Filter />
+            <Filter
+              name="filter"
+              label="Filtrar por:"
+              value={filter}
+              onChange={e => setFilter(e.target.value)}
+              options={[
+                {value: 'price-ASC', label: 'Preço - ascendente'},
+                {value: 'price-DESC', label: 'Preço - decrescente'},
+                {value: 'positive_reviews-ASC', label: 'Reviews positivas - ascendente'},
+                {value: 'positive_reviews-DESC', label: 'Reviews positivas - decrescente'},
+                {value: 'negative_reviews-ASC', label: 'Reviews negativas - ascendente'},
+                {value: 'negative_reviews-DESC', label: 'Reviews negativas - decrescente'},
+                {value: 'owners-ASC', label: 'Owners - ascendente'},
+                {value: 'owners-DESC', label: 'Owners - decrescente'}
+              ]}
+            />
 
-            <Sorter />
+            <Filter
+              name="sorter"
+              label="Ordenar por:"
+              value={sorter}
+              onChange={e => setSorter(e.target.value)}
+              options={[
+                {value: 'AZ-ASC', label: 'Alfabética - ascendente'},
+                {value: 'AZ-DESC', label: 'Alfabética - decrescente'},
+                {value: 'revenue-ASC', label: 'Revenue - ascendente'},
+                {value: 'revenue-DESC', label: 'Revenue - decrescente'}
+              ]}
+            />
+          </Col>
+
+          <Col sm="12" md="4" className="mb-3 mb-md-0 text-center">
+            {
+              selectedGames.length >= 1 &&
+              <ButtonPrimary onClick={() => handleSubmitGames()} className="px-5 py-3" type="button" uppercase>
+                Analisar
+              </ButtonPrimary>
+            }
+
+            <S.GameCounter>Analisando {selectedGames.length} {selectedGames.length > 1 ? "jogos" : "jogo"}</S.GameCounter>
           </Col>
 
           <Col sm="12" md="4">
@@ -100,14 +155,17 @@ const GamesTags = () => {
                       {
                         !selectedGames.includes(game.name) &&
                         <S.GameActions>
+                          {
+                            selectedGames.length <= 4 &&
+                            <ButtonPrimary onClick={() => handleSelectGames(game)} uppercase type="button">
+                              Selecionar
+                            </ButtonPrimary>
+                          }
 
-                          <ButtonPrimary onClick={() => handleSelectGames(game)} uppercase type="button">
-                            Comparar
-                          </ButtonPrimary>
                           {
                             selectedGames.length < 1 &&
                             <S.ViewGame to={{pathname: `/game/${game.name}`}} uppercase>
-                              Analisar
+                              Visualizar
                             </S.ViewGame>
                           }
 

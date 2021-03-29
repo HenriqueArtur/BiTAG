@@ -1,5 +1,5 @@
 import React from 'react';
-import { Bar } from "react-chartjs-2";
+import { HorizontalBar } from "react-chartjs-2";
 
 const options = {
   legend: {
@@ -16,10 +16,10 @@ const options = {
   },
 }
 
-const ChartBar = (props) => (
+const ChartHorizontalBar = (props) => (
   <>
-    <Bar data={props.data} options={options} />
+    <HorizontalBar data={props.data} options={options} />
   </>
 );
 
-export default ChartBar;
+export default ChartHorizontalBar;

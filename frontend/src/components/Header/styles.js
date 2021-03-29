@@ -12,7 +12,8 @@ export const Logo = styled.img`
 `;
 
 export const NavbarHeader = styled(Navbar)`
-  background-color: var(--background);
+  background-color: transparent;
+  z-index: 1;
 
   .navbar-toggler {
     border-color: rgba(102, 252, 241, 0.5);

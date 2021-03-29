@@ -18,25 +18,32 @@ export const TagActions = styled.div`
   display: none;
   flex: 1 1 100%;
   flex-direction: column;
+  left: 50%;
   margin: .25rem 0 0;
   position: absolute;
-  top: 70%;
+  top: 95%;
+  transform: translateX(-50%);
   transition: opacity 0.5s;
+  width: 95%;
 
   > button {
-    padding: .1rem 2rem;
+    font-size: .8rem;
+    padding: .2rem .6rem;
+    text-align: left;
+    width: 100%;
   }
 
   > a {
     font-size: .7rem;
     margin-top: .2rem;
+    padding: .1rem .6rem;
   }
 `;
 
 export const TagCard = styled.div`
   align-items: center;
   display: flex;
-  border: 1px solid ${props => props.bordered ? "var(--main-color)" : "transparent"};
+  border: 1px solid ${props => props.bordered ? "var(--main-color)" : "var(--color-gray)"};
   border-radius: 5px;
   flex-wrap: wrap;
   justify-content: space-between;
@@ -44,7 +51,7 @@ export const TagCard = styled.div`
   position: relative;
 
   > svg {
-    border: 1px solid var(--main-color);
+    border: 2px solid var(--main-color);
     border-radius: 50%;
     color: var(--main-color);
     left: -1.8rem;
