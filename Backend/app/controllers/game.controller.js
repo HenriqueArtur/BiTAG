@@ -557,6 +557,52 @@ exports.findByParams = (req, res) => {
     });
 };
 
+exports.search = (req, res) => {
+  if (Object.keys(req.query).length === 0 || !("search" in req.query)) {
+    res.status(400).send({
+      status: 400,
+      message: "Bad Request!",
+    });
+  }
+
+  let search = req.query.search;
+
+  let query = {
+    order: [["name", "ASC"]],
+    include: [
+      {
+        model: Tag,
+        as: "tag",
+        attributes: ["id", "name"],
+      },
+    ],
+    where: {
+      name: { [Op.like]: `%${search}%` }
+    },
+  };
+
+  try {
+    Game.findAll(query)
+      .then(data => {
+        if (data.length == 0 || data == undefined)
+          res.status(404).send({
+            status: 404,
+            message: "Not Found",
+          });
+        else {
+          res.setHeader("Games-Found", data.length);
+          res.send(data);
+        }
+      })
+  } catch (error) {
+    console.log(err);
+      res.status(500).send({
+        status: 500,
+        message: "Error on server",
+      });   
+  }
+}
+
 async function search_games_by_tags(search_tags = []){
   // console.log(search_tags);
   search_tags = search_tags
