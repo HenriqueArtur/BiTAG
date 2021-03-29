@@ -15,32 +15,42 @@ exports.getInfos = async (req, res) => {
     historicalRevenue: {},
   }
 
-  let tags = await Tag.findAll({
-    group: ["Tag.name"],
-    include: [
-        {
-          model: Game,
-          as: "game",
-          attributes: ["revenue"],
-          required: false,
-        },
-      ],
-    attributes: [
-        [sequelize.fn("SUM", sequelize.col("Game.revenue")), "revenue"],
-        "id",
-        "name",
-        "games_count",
-        "revenue_0k_5k",
-        "revenue_5k_25k",
-        "revenue_25k_100k",
-        "revenue_100k_200k",
-        "revenue_200k_500k",
-        "revenue_500k_1M",
-        "revenue_1M_5M",
-        "revenue_5M",
-      ],
-    order: [[sequelize.literal("revenue"), "DESC"]],
-  })
+  let tags = []
+
+  try {
+    tags = await Tag.findAll({
+      group: ["Tag.name"],
+      include: [
+          {
+            model: Game,
+            as: "game",
+            attributes: ["revenue"],
+            required: false,
+          },
+        ],
+      attributes: [
+          [sequelize.fn("SUM", sequelize.col("Game.revenue")), "revenue"],
+          "id",
+          "name",
+          "games_count",
+          "revenue_0k_5k",
+          "revenue_5k_25k",
+          "revenue_25k_100k",
+          "revenue_100k_200k",
+          "revenue_200k_500k",
+          "revenue_500k_1M",
+          "revenue_1M_5M",
+          "revenue_5M",
+        ],
+      order: [[sequelize.literal("revenue"), "DESC"]],
+    })
+  } catch (error) {
+    console.log(error);
+    res.status(500).send({
+      status: 500,
+      message: error,
+    });
+  }
   
   let bigerPropotionalRevenue = 0;
   let bigerPropotionalRevenueName = '';
@@ -72,70 +82,102 @@ exports.getInfos = async (req, res) => {
   }
   
   /* PROPOTIONAL REVENUE */
-  let propotionalQuery = {
-    order: [["revenue", "DESC"]],
-    include: [
-      {
-        model: Tag,
-        as: "tag",
-        attributes: ["id", "name"],
-        where: { name: bigerPropotionalRevenueName },
-        required: true,
-      },
-    ],
-    limit: 5,
-  };
-
-  await Game.findAll(propotionalQuery).then(data => {
-    response.proportionalRevenue = {
-      tag: bigerPropotionalRevenueName,
-      games: data
-    }
-  })
+  try {
+    let propotionalQuery = {
+      order: [["revenue", "DESC"]],
+      include: [
+        {
+          model: Tag,
+          as: "tag",
+          attributes: ["id", "name"],
+          where: { name: bigerPropotionalRevenueName },
+          required: true,
+        },
+      ],
+      limit: 5,
+    };
+  
+    await Game.findAll(propotionalQuery).then(data => {
+      response.proportionalRevenue = {
+        tag: bigerPropotionalRevenueName,
+        games: data
+      }
+    })
+  } catch (error) {
+    console.log(error);
+    res.status(500).send({
+      status: 500,
+      message: error,
+    });
+  }
 
   /* Games quantitie */
-  let quantitieQuery = {
-    order: [["revenue", "DESC"]],
-    include: [
-      {
-        model: Tag,
-        as: "tag",
-        attributes: ["id", "name"],
-        where: { name: gamesCountName },
-        required: true,
-      },
-    ],
-    limit: 5,
-  };
-
-  await Game.findAll(quantitieQuery).then(data => {
-    response.gamesCount = {
-      tag: gamesCountName,
-      games: data
-    }
-  })
+  try {
+    let quantitieQuery = {
+      order: [["revenue", "DESC"]],
+      include: [
+        {
+          model: Tag,
+          as: "tag",
+          attributes: ["id", "name"],
+          where: { name: gamesCountName },
+          required: true,
+        },
+      ],
+      limit: 5,
+    };
+  
+    await Game.findAll(quantitieQuery).then(data => {
+      response.gamesCount = {
+        tag: gamesCountName,
+        games: data
+      }
+    })
+  } catch (error) {
+    console.log(error);
+    res.status(500).send({
+      status: 500,
+      message: error,
+    });
+  }
 
   /* Historical Revenue */
-  let historicalQuery = {
-    order: [["revenue", "DESC"]],
-    include: [
-      {
-        model: Tag,
-        as: "tag",
-        attributes: ["id", "name"],
-        where: { name: bigerHistoricalRevenueName },
-        required: true,
-      },
-    ],
-    limit: 5,
-  };
+  try {
+    let historicalQuery = {
+      order: [["revenue", "DESC"]],
+      include: [
+        {
+          model: Tag,
+          as: "tag",
+          attributes: ["id", "name"],
+          where: { name: bigerHistoricalRevenueName },
+          required: true,
+        },
+      ],
+      limit: 5,
+    };
+  
+    await Game.findAll(historicalQuery).then(data => {
+      response.historicalRevenue = {
+        tag: bigerHistoricalRevenueName,
+        games: data
+      }
+    })
+  } catch (error) {
+    console.log(error);
+    res.status(500).send({
+      status: 500,
+      message: error,
+    });
+  }
 
-  await Game.findAll(historicalQuery).then(data => {
-    response.historicalRevenue = {
-      tag: bigerHistoricalRevenueName,
-      games: data
-    }
-  })
-
-  res.send(response);
+  try {
+    res.send(response);
+  } catch (error) {
+    console.log(error);
+    res.status(500).send({
+      status: 500,
+      message: error,
+    });
+  }
 }
