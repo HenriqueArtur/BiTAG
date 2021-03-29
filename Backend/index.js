@@ -28,6 +28,7 @@ app.get("/api/games/findByName", Game.findByName);
 app.get("/api/games/findByAppId", Game.findByAppId);
 app.get("/api/games/findByTags", Game.findByTags);
 app.get("/api/games/findByParams", Game.findByParams);
+app.get("/api/games/search", Game.search);
 
 app.get("/api/home", Home.getInfos);
 
