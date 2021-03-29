@@ -31,7 +31,7 @@ const Games = () => {
 
   const [page, setPage] = useState(0);
   const [total, setTotal] = useState(0);
-  const [offset, setOffset] = useState(0);
+  const [showPagination, setShowPagination] = useState(false);
 
   useEffect(() => {
     const fetchGames = async () => {
@@ -96,6 +96,18 @@ const Games = () => {
 
     sorterGames();
   }, [sorter]);
+
+  useEffect(() => {
+    async function handlePagination() {
+      if(searchTerm === "" && filter === "" && sorter === "") {
+        setShowPagination(true);
+      } else {
+        setShowPagination(false);
+      }
+    }
+
+    handlePagination();
+  }, [searchTerm, filter, sorter]);
 
   return (
     <div id="page-games">
@@ -199,9 +211,12 @@ const Games = () => {
                 </Col>
               ))}
 
-              <Col md="12" className="d-flex justify-content-center">
-                <CustomPagination limit={LIMIT} total={total} page={page} setPage={setPage} />
-              </Col>
+              {
+                showPagination &&
+                <Col md="12" className="d-flex justify-content-center">
+                  <CustomPagination limit={LIMIT} total={total} page={page} setPage={setPage} />
+                </Col>
+              }
             </Row>
           ) : (
             <Row className="flex-100 justify-content-center">
