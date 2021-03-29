@@ -4,4 +4,8 @@ export const Select = styled.select`
   background-color: transparent;
   border: none;
   color: var(--main-color);
+
+  option {
+    color: var(--color-black);
+  }
 `;
