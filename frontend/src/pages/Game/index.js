@@ -3,7 +3,7 @@ import React, { useEffect, useState } from 'react';
 import { Col, Container, Row } from 'react-bootstrap';
 import { FiChevronLeft, FiDollarSign, FiThumbsDown, FiThumbsUp, FiTriangle, FiUser } from 'react-icons/fi';
 
-import { Link, useParams } from 'react-router-dom';
+import { useParams, useHistory } from 'react-router-dom';
 
 import * as S from './styles';
 import GameCard from '../../components/GameCard';
@@ -15,6 +15,7 @@ import api from '../../services/api';
 const Games = () => {
   let { game_name } = useParams();
   const [game, setGame] = useState([]);
+  const history = useHistory();
 
   useEffect(() => {
     api.get(`/games/findByName?names=${game_name}`)
@@ -30,10 +31,10 @@ const Games = () => {
       <Container className="d-flex flex-column">
         <Row>
           <Col>
-            <Link to="/games">
+            <S.BackButton onClick={() => history.goBack()}>
               <FiChevronLeft color="#66fcf1" size={25} />
               Voltar
-            </Link>
+            </S.BackButton>
           </Col>
         </Row>
 

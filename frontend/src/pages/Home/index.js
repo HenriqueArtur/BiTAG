@@ -1,11 +1,7 @@
 import React, { useEffect, useState } from 'react';
 
 import { Col, Container, Row, Spinner } from 'react-bootstrap';
-import { FiCheck, FiChevronDown } from 'react-icons/fi';
-
-import { ButtonPrimary } from '../../components/CustomButton';
-
-import { useHistory } from 'react-router-dom';
+import { FiChevronDown } from 'react-icons/fi';
 
 import backgroundHome from '../../assets/background-home.png';
 import logo from '../../assets/logo.png';
@@ -16,44 +12,24 @@ import api from '../../services/api';
 
 const Home = () => {
   const [games, setGames] = useState([]);
-  const history = useHistory();
-  const [selectedGames, setSelectedGames] = useState([]);
 
   const [loading, setLoading] = useState(false);
 
-  const fetchGames = async () => {
-    try {
-      await api.get(`/games`)
-      .then(response => {
-        setGames(response.data);
-      });
-      setLoading(true);
-    } catch (err) {
-      console.log(err);
-    }
-  }
-
   useEffect(() => {
+    const fetchGames = async () => {
+      try {
+        await api.get(`/home`)
+        .then(response => {
+          setGames(Object.keys(response.data).map(key => response.data[key]));
+        });
+        setLoading(true);
+      } catch (err) {
+        console.log(err);
+      }
+    }
+
     fetchGames();
   }, []);
-
-  useEffect(() => {
-    const handleSubmitGames = () => {
-      selectedGames.length >= 2 &&
-      history.push({
-        pathname: "/gamescomparison/findByName",
-        search: `?names=${selectedGames.join(",")}`
-      });
-    }
-
-    handleSubmitGames();
-  }, [selectedGames, history]);
-
-  const handleSelectGames = (game) => {
-    selectedGames.includes(game.name)
-      ? setSelectedGames(selectedGames.filter(x => x !== game.name))
-      : setSelectedGames([...selectedGames, game.name]);
-  }
 
   return (
     <div id="page-home">
@@ -68,162 +44,49 @@ const Home = () => {
           <a href="#tags"><FiChevronDown /></a>
         </div>
       </S.Background>
+
       <Container id="tags" className="d-flex flex-column">
-        <Row className="flex-100 justify-content-between mb-4">
-          <Col md="12" className="mb-4">
-            <S.ListTitle>
-              Nome da Tag
-            </S.ListTitle>
-          </Col>
-          <Col md="6" lg="3" className="mb-4">
-            <S.GameCard>
-              <S.ImageWrapper>
-                <img src="https://cdn.akamai.steamstatic.com/steam/apps/1200/header.jpg?t=1551467896" alt="game cover" />
-              </S.ImageWrapper>
-              <S.GameInfo>
-                <h3>Nome do jogo</h3>
-                <p>Estudio</p>
-              </S.GameInfo>
-            </S.GameCard>
-          </Col>
-          <Col md="6" lg="3" className="mb-4">
-            <S.GameCard>
-              <S.ImageWrapper>
-                <img src="https://cdn.akamai.steamstatic.com/steam/apps/1200/header.jpg?t=1551467896" alt="game cover" />
-              </S.ImageWrapper>
-              <S.GameInfo>
-                <h3>Nome do jogo</h3>
-                <p>Estudio</p>
-              </S.GameInfo>
-            </S.GameCard>
-          </Col>
-          <Col md="6" lg="3" className="mb-4">
-            <S.GameCard>
-              <S.ImageWrapper>
-                <img src="https://cdn.akamai.steamstatic.com/steam/apps/1200/header.jpg?t=1551467896" alt="game cover" />
-              </S.ImageWrapper>
-              <S.GameInfo>
-                <h3>Nome do jogo</h3>
-                <p>Estudio</p>
-              </S.GameInfo>
-            </S.GameCard>
-          </Col>
-          <Col md="6" lg="3" className="mb-4">
-            <S.GameCard>
-              <S.ImageWrapper>
-                <img src="https://cdn.akamai.steamstatic.com/steam/apps/1200/header.jpg?t=1551467896" alt="game cover" />
-              </S.ImageWrapper>
-              <S.GameInfo>
-                <h3>Nome do jogo</h3>
-                <p>Estudio</p>
-              </S.GameInfo>
-            </S.GameCard>
-          </Col>
-        </Row>
+        {
+          loading ? (
 
-        <Row className="flex-100 justify-content-between mb-4">
-          <Col md="12" className="mb-4">
-            <S.ListTitle>
-              Nome da Tag
-            </S.ListTitle>
-          </Col>
-          <Col md="6" lg="3" className="mb-4">
-            <S.GameCard>
-              <S.ImageWrapper>
-                <img src="https://cdn.akamai.steamstatic.com/steam/apps/1200/header.jpg?t=1551467896" alt="game cover" />
-              </S.ImageWrapper>
-              <S.GameInfo>
-                <h3>Nome do jogo</h3>
-                <p>Estudio</p>
-              </S.GameInfo>
-            </S.GameCard>
-          </Col>
-          <Col md="6" lg="3" className="mb-4">
-            <S.GameCard>
-              <S.ImageWrapper>
-                <img src="https://cdn.akamai.steamstatic.com/steam/apps/1200/header.jpg?t=1551467896" alt="game cover" />
-              </S.ImageWrapper>
-              <S.GameInfo>
-                <h3>Nome do jogo</h3>
-                <p>Estudio</p>
-              </S.GameInfo>
-            </S.GameCard>
-          </Col>
-          <Col md="6" lg="3" className="mb-4">
-            <S.GameCard>
-              <S.ImageWrapper>
-                <img src="https://cdn.akamai.steamstatic.com/steam/apps/1200/header.jpg?t=1551467896" alt="game cover" />
-              </S.ImageWrapper>
-              <S.GameInfo>
-                <h3>Nome do jogo</h3>
-                <p>Estudio</p>
-              </S.GameInfo>
-            </S.GameCard>
-          </Col>
-          <Col md="6" lg="3" className="mb-4">
-            <S.GameCard>
-              <S.ImageWrapper>
-                <img src="https://cdn.akamai.steamstatic.com/steam/apps/1200/header.jpg?t=1551467896" alt="game cover" />
-              </S.ImageWrapper>
-              <S.GameInfo>
-                <h3>Nome do jogo</h3>
-                <p>Estudio</p>
-              </S.GameInfo>
-            </S.GameCard>
-          </Col>
-        </Row>
+            games.map(item => (
+              <Row key={item.tag} className="flex-100 justify-content-start mb-4">
+                <Col md="12" className="mb-4">
+                  <S.ListTitle>
+                    {item.tag}
+                  </S.ListTitle>
+                </Col>
+                {
+                  item.games.map(game => (
+                    <Col key={game.id} md="6" lg="3" className="mb-4">
+                      <S.GameCard key={game.id}>
+                        <S.ImageWrapper>
+                          <img src={game.header_image} alt={game.name} />
+                          <S.GameActions>
+                            <S.ViewGame to={{pathname: `/game/${game.name}`}} uppercase>
+                              Visualizar
+                            </S.ViewGame>
+                          </S.GameActions>
+                        </S.ImageWrapper>
+                        <S.GameInfo>
+                          <h3>{game.name}</h3>
+                          <p>{game.developer_name}</p>
+                        </S.GameInfo>
+                      </S.GameCard>
+                    </Col>
+                  ))
+                }
+              </Row>
+            ))
 
-        <Row className="flex-100 justify-content-between mb-4">
-          <Col md="12" className="mb-4">
-            <S.ListTitle>
-              Nome da Tag
-            </S.ListTitle>
-          </Col>
-          <Col md="6" lg="3" className="mb-4">
-            <S.GameCard>
-              <S.ImageWrapper>
-                <img src="https://cdn.akamai.steamstatic.com/steam/apps/1200/header.jpg?t=1551467896" alt="game cover" />
-              </S.ImageWrapper>
-              <S.GameInfo>
-                <h3>Nome do jogo</h3>
-                <p>Estudio</p>
-              </S.GameInfo>
-            </S.GameCard>
-          </Col>
-          <Col md="6" lg="3" className="mb-4">
-            <S.GameCard>
-              <S.ImageWrapper>
-                <img src="https://cdn.akamai.steamstatic.com/steam/apps/1200/header.jpg?t=1551467896" alt="game cover" />
-              </S.ImageWrapper>
-              <S.GameInfo>
-                <h3>Nome do jogo</h3>
-                <p>Estudio</p>
-              </S.GameInfo>
-            </S.GameCard>
-          </Col>
-          <Col md="6" lg="3" className="mb-4">
-            <S.GameCard>
-              <S.ImageWrapper>
-                <img src="https://cdn.akamai.steamstatic.com/steam/apps/1200/header.jpg?t=1551467896" alt="game cover" />
-              </S.ImageWrapper>
-              <S.GameInfo>
-                <h3>Nome do jogo</h3>
-                <p>Estudio</p>
-              </S.GameInfo>
-            </S.GameCard>
-          </Col>
-          <Col md="6" lg="3" className="mb-4">
-            <S.GameCard>
-              <S.ImageWrapper>
-                <img src="https://cdn.akamai.steamstatic.com/steam/apps/1200/header.jpg?t=1551467896" alt="game cover" />
-              </S.ImageWrapper>
-              <S.GameInfo>
-                <h3>Nome do jogo</h3>
-                <p>Estudio</p>
-              </S.GameInfo>
-            </S.GameCard>
-          </Col>
-        </Row>
+          ) : (
+            <Row className="flex-100 justify-content-center">
+              <Spinner animation="border" role="status">
+                <span className="sr-only">Loading...</span>
+              </Spinner>
+            </Row>
+          )
+        }
       </Container>
     </div>
   );

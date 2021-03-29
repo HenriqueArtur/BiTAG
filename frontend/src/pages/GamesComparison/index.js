@@ -36,15 +36,6 @@ const Games = () => {
     });
   }, [search]);
 
-  // useEffect(() => {
-  //   axios.get("./steam.json")
-  //   .then(result => {
-  //     setLabel(Object.keys(result.data).map(key => result.data[key].release));
-  //     setPrice(Object.keys(result.data).map(key => result.data[key].price));
-  //     setDiscount(Object.keys(result.data).map(key => result.data[key].discount));
-  //   });
-  // }, []);
-
   return (
     <div id="page-gamescomparison">
       <Container className="d-flex flex-column">
