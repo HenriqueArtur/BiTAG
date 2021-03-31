@@ -117,7 +117,7 @@ export const ListTitle = styled.h1`
 
 export const Background = styled.div`
   margin-bottom: 5rem;
-  margin-top: -13.5rem;
+  margin-top: -8rem;
   position: relative;
 
   > img {
@@ -145,6 +145,10 @@ export const Background = styled.div`
     > img {
       margin: 0 0 2.5rem;
       max-width: 280px;
+
+      @media screen and (max-width: 400px) {
+        max-width: 250px;
+      }
     }
 
     > h1 {
@@ -190,6 +194,6 @@ export const Background = styled.div`
   }
 
   @media(max-width: 768px) {
-    margin-top: -7.5rem;
+    margin-top: -6.5rem;
   }
 `;

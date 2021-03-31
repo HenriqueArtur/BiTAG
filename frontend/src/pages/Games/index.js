@@ -66,7 +66,7 @@ const Games = () => {
   }
 
   const handleSearchGames = () => {
-    api.get(`/games/findByName?names=${searchTerm}`)
+    api.get(`/games/search?search=${searchTerm}`)
     .then(response => {
       let result = response.data.filter((item) =>
         item.name.toLowerCase().includes(searchTerm.toLowerCase())
