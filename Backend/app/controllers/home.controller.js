@@ -94,12 +94,13 @@ exports.getInfos = async (req, res) => {
           required: true,
         },
       ],
-      limit: 5,
+      limit: 4,
     };
   
     await Game.findAll(propotionalQuery).then(data => {
       response.proportionalRevenue = {
         tag: bigerPropotionalRevenueName,
+        lable: "Proportional revenue",
         games: data
       }
     })
@@ -124,12 +125,13 @@ exports.getInfos = async (req, res) => {
           required: true,
         },
       ],
-      limit: 5,
+      limit: 4,
     };
   
     await Game.findAll(quantitieQuery).then(data => {
       response.gamesCount = {
         tag: gamesCountName,
+        lable: "Number of games",
         games: data
       }
     })
@@ -154,12 +156,13 @@ exports.getInfos = async (req, res) => {
           required: true,
         },
       ],
-      limit: 5,
+      limit: 4,
     };
   
     await Game.findAll(historicalQuery).then(data => {
       response.historicalRevenue = {
         tag: bigerHistoricalRevenueName,
+        lable: "Historical revenue",
         games: data
       }
     })
