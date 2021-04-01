@@ -32,6 +32,4 @@ app.get("/api/games/search", Game.search);
 
 app.get("/api/home", Home.getInfos);
 
-app.listen(process.env.PORT || 3000, () => {
-  console.log(`Listening on port: ${process.env.PORT}`);
-});
+module.exports = app;
