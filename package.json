@@ -1,0 +1,20 @@
+{
+  "name": "BiTAG",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "lt": "lt -p 3001 -s bitag"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/HenriqueArtur/BiTAG.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/HenriqueArtur/BiTAG/issues"
+  },
+  "homepage": "https://github.com/HenriqueArtur/BiTAG#readme"
+}

@@ -172,6 +172,7 @@ exports.getInfos = async (req, res) => {
   }
 
   try {
+    res.header("Access-Control-Allow-Origin", "*");
     res.send(response);
   } catch (error) {
     console.log(error);
