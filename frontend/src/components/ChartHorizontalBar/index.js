@@ -10,6 +10,7 @@ const options = {
       {
         ticks: {
           beginAtZero: true,
+          padding: 5,
         },
       },
     ],

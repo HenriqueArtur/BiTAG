@@ -11,6 +11,8 @@ import Filter from '../../components/Filter';
 
 import SearchBar from '../../components/SearchBar';
 
+import gamePlaceholder from '../../assets/placeholder-game.png';
+
 import * as S from './styles';
 
 import api from '../../services/api';
@@ -172,7 +174,14 @@ const Games = () => {
                 <Col key={game.id} md="6" lg="4" className="mb-4">
                   <S.GameCard selected={selectedGames.includes(game.name) ? true : false}>
                     <S.ImageWrapper>
-                      <img src={game.header_image} alt="game cover" />
+                      {
+                        game.header_image === null
+                        ? (
+                          <img src={gamePlaceholder} alt="game cover" />
+                        ) : (
+                          <img src={game.header_image} alt="game cover" />
+                        )
+                      }
 
                       {
                         !selectedGames.includes(game.name) &&

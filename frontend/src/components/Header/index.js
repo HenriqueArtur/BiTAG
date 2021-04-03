@@ -33,7 +33,7 @@ const Header = (props) => {
             <Nav>
               <S.NavLink to="/tags">Tags</S.NavLink>
               <S.NavLink to="/games">Jogos</S.NavLink>
-              <S.NavLink to="/tags">Sobre</S.NavLink>
+              <S.NavLink to="/sobre">Sobre</S.NavLink>
             </Nav>
           </Navbar.Collapse>
         </S.NavContainer>

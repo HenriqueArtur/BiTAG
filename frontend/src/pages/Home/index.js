@@ -6,6 +6,8 @@ import { FiChevronDown } from 'react-icons/fi';
 import backgroundHome from '../../assets/background-home.png';
 import logo from '../../assets/logo.png';
 
+import gamePlaceholder from '../../assets/placeholder-game.png';
+
 import * as S from './styles';
 
 import api from '../../services/api';
@@ -53,7 +55,7 @@ const Home = () => {
               <Row key={item.tag} className="flex-100 justify-content-start mb-4">
                 <Col md="12" className="mb-4">
                   <S.ListTitle>
-                    {item.tag}
+                    {item.lable}: {item.tag}
                   </S.ListTitle>
                 </Col>
                 {
@@ -61,7 +63,15 @@ const Home = () => {
                     <Col key={game.id} md="6" lg="3" className="mb-4">
                       <S.GameCard key={game.id}>
                         <S.ImageWrapper>
-                          <img src={game.header_image} alt={game.name} />
+                          {
+                            game.header_image === null
+                            ? (
+                              <img src={gamePlaceholder} alt="game cover" />
+                            ) : (
+                              <img src={game.header_image} alt="game cover" />
+                            )
+                          }
+
                           <S.GameActions>
                             <S.ViewGame to={{pathname: `/game/${game.name}`}} uppercase>
                               Visualizar
