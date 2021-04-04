@@ -1,5 +1,5 @@
-import "dotenv/config";
-import cors from "cors";
+require("dotenv/config");
+const cors = require("cors");
 const express = require("express");
 const bodyParser = require("body-parser");
 
@@ -39,12 +39,10 @@ app.get("/api/games/findByTags", Game.findByTags);
 app.get("/api/games/findByParams", Game.findByParams);
 app.get("/api/games/search", Game.search);
 
-app.get("/api/home", cors({
-  exposedHeaders: ['All-Games', 'Games-Found', 'Page', "Access-Control-Allow-Origin"],
-  origin: 'https://fresh-impala-16.loca.lt',
-  optionsSuccessStatus: 200
-}), Home.getInfos);
+app.get("/api/home", Home.getInfos);
 
 app.listen(process.env.PORT || 3000, () => {
   console.log(`Listening on port: ${process.env.PORT}`);
 });
+
+module.exports = app;
