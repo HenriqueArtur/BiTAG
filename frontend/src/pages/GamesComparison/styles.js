@@ -95,6 +95,6 @@ export const BackButton = styled(ButtonPrimary)`
 export const GraphicTitle = styled.h2`
   color: var(--main-color);
   font-size: 1.2rem;
-  margin: 0 0 1rem;
+  margin: 0 0 .8rem;
   text-transform: uppercase;
 `;

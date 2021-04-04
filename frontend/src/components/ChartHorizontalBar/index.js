@@ -5,11 +5,13 @@ const options = {
   legend: {
     display: false
   },
+  maintainAspectRatio: false,
   scales: {
     yAxes: [
       {
         ticks: {
           beginAtZero: true,
+          padding: 5,
         },
       },
     ],

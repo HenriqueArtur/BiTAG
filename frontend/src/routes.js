@@ -10,6 +10,7 @@ import GamesTags from './pages/GamesTags';
 import GamesComparison from './pages/GamesComparison';
 import Game from './pages/Game';
 import Home from './pages/Home';
+import Sobre from './pages/Sobre';
 
 export default function Routes() {
   return (
@@ -23,6 +24,7 @@ export default function Routes() {
         <Route path="/gamestags/:tag_name" component={GamesTags} />
         <Route path="/gamescomparison" component={GamesComparison} />
         <Route path="/game/:game_name" component={Game} />
+        <Route path="/sobre" component={Sobre} />
       </Switch>
     </BrowserRouter>
   );
