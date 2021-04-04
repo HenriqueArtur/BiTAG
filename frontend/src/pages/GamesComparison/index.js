@@ -96,8 +96,8 @@ const Games = () => {
             <S.GraphicTitle>
               Price and Initial Price Comparison
             </S.GraphicTitle>
-            <Row>
-              <Col>
+            <Row className="mb-5">
+              <Col style={{height: '300px'}}>
                 <ChartHorizontalBar
                   data={{
                     labels: label,
@@ -107,8 +107,8 @@ const Games = () => {
                         backgroundColor: "rgba(59, 218, 109, 0.4)",
                         borderColor: "rgba(59, 218, 109, 1)",
                         borderWidth: 1,
-                        barPercentage: 0.5,
-                        categoryPercentage: 0.5,
+                        barPercentage: 0.6,
+                        categoryPercentage: 0.6,
                         hoverBackgroundColor: "rgba(59, 218, 109, 0.6)",
                         hoverBorderColor: "rgba(59, 218, 109, 1)",
                         data: initialPrice
@@ -118,8 +118,8 @@ const Games = () => {
                         backgroundColor: "rgba(195, 69, 133, 0.6)",
                         borderColor: "rgba(195, 69, 133, 1)",
                         borderWidth: 1,
-                        barPercentage: 0.5,
-                        categoryPercentage: 0.5,
+                        barPercentage: 0.6,
+                        categoryPercentage: 0.6,
                         hoverBackgroundColor: "rgba(195, 69, 133, 0.8)",
                         hoverBorderColor: "rgba(195, 69, 133, 1)",
                         data: price
@@ -131,10 +131,36 @@ const Games = () => {
             </Row>
 
             <S.GraphicTitle>
-              Owners Comparison
+              Revenue Comparison
             </S.GraphicTitle>
             <Row className="mb-5">
-              <Col>
+              <Col style={{height: '300px'}}>
+                <ChartHorizontalBar
+                  data={{
+                    labels: label,
+                    datasets: [
+                      {
+                        label: "Revenue",
+                        backgroundColor: "rgba(111, 227, 255, 0.5)",
+                        borderColor: "rgba(111, 227, 255, 1)",
+                        borderWidth: 1,
+                        barPercentage: 0.45,
+                        categoryPercentage: 0.45,
+                        hoverBackgroundColor: "rgba(111, 227, 255, 0.7)",
+                        hoverBorderColor: "rgba(111, 227, 255, 1)",
+                        data: revenue
+                      }
+                    ],
+                  }}
+                />
+              </Col>
+            </Row>
+
+            <S.GraphicTitle>
+              Owners Comparison
+            </S.GraphicTitle>
+            <Row>
+              <Col style={{height: '300px'}}>
                 <ChartPolarArea
                   data={{
                     labels: label,
@@ -147,32 +173,6 @@ const Games = () => {
                         hoverBackgroundColor: "rgba(89, 89, 224, 0.6)",
                         hoverBorderColor: "rgba(89, 89, 224, 1)",
                         data: owners
-                      }
-                    ],
-                  }}
-                />
-              </Col>
-            </Row>
-
-            <S.GraphicTitle>
-              Revenue Comparison
-            </S.GraphicTitle>
-            <Row className="mb-5">
-              <Col>
-                <ChartHorizontalBar
-                  data={{
-                    labels: label,
-                    datasets: [
-                      {
-                        label: "Revenue",
-                        backgroundColor: "rgba(111, 227, 255, 0.5)",
-                        borderColor: "rgba(111, 227, 255, 1)",
-                        borderWidth: 1,
-                        barPercentage: 0.4,
-                        categoryPercentage: 0.4,
-                        hoverBackgroundColor: "rgba(111, 227, 255, 0.7)",
-                        hoverBorderColor: "rgba(111, 227, 255, 1)",
-                        data: revenue
                       }
                     ],
                   }}
